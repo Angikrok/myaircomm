@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'app20new/screen/01_loadingscreen/loading_screen.dart';
 
-
-
+// metodo main
 void main() {
   runApp(MyApp());
 }
