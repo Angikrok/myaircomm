@@ -1,5 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../../model/costanti.dart';
 import '../../model/button.dart';
 import '../02_login/login_aziendale.dart';
@@ -19,31 +21,35 @@ class _LoadingScreenFasulloState extends State<LoadingScreenFasullo> {
   int animazioneCaricamento = 1;
   int messaggioDiErrore = 2;
   int spazioFinale = 1;
+  DateTime? backButtonPressedTime;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        //sfondo pagina
-        decoration: sfondoPagina(),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            //spaziatura iniziale
-            spaziaturaWdg(spazioIniziale),
-            //logo aircomm
-            logoAircommWdg(logoMyAircomm),
-            //scritta my aircomm
-            scrittaMyAircommWdg(32, scrittaMyAircomm),
+    return WillPopScope(
+      onWillPop: doubleTapCloseApp,
+      child: Scaffold(
+        body: Container(
+          //sfondo pagina
+          decoration: sfondoPagina(),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              //spaziatura iniziale
+              spaziaturaWdg(spazioIniziale),
+              //logo aircomm
+              logoAircommWdg(logoMyAircomm),
+              //scritta my aircomm
+              scrittaMyAircommWdg(32, scrittaMyAircomm),
 
-            Container(),
+              Container(),
 
-            graphicErrorMsgWithButtonWdg(17, messaggioDiErrore),
+              graphicErrorMsgWithButtonWdg(17, messaggioDiErrore),
 
-            selectionBusinssPrivateWdg(17, messaggioDiErrore),
+              selectionBusinssPrivateWdg(17, messaggioDiErrore),
 
-            spaziaturaWdg(spazioFinale),
-          ],
+              spaziaturaWdg(spazioFinale),
+            ],
+          ),
         ),
       ),
     );
@@ -53,9 +59,9 @@ class _LoadingScreenFasulloState extends State<LoadingScreenFasullo> {
     return BoxDecoration(
       gradient: LinearGradient(
         colors: [
-          Color(0xFFCAF0F8),
-          Color(0xFF90E0EF),
-          Color(0xFFADE8F4),
+          Colors.white,
+          Colors.grey[100]!,
+          Colors.grey[350]!,
         ],
         transform: GradientRotation(-45),
       ),
@@ -108,15 +114,19 @@ class _LoadingScreenFasulloState extends State<LoadingScreenFasullo> {
         children: [
           //scritta my aircomm
           Expanded(
-            flex: 135,
+            flex: 1,
+            child: Container(),
+          ),
+          Expanded(
+            flex: 2,
             child: AnimatedTextKit(
               animatedTexts: [
                 TypewriterAnimatedText(
-                  'My',
+                  'My Aircomm',
                   textAlign: TextAlign.end,
                   cursor: "",
                   textStyle: TextStyle(
-                      color: Costanti.arancioneAircomm,
+                      color: Costanti.bluAircomm,
                       fontSize: fontSize32,
                       fontWeight: FontWeight.bold,
                       fontFamily: "Coco"),
@@ -127,24 +137,25 @@ class _LoadingScreenFasulloState extends State<LoadingScreenFasullo> {
             ),
           ),
           Expanded(
-            flex: 192,
-            child: AnimatedTextKit(
-              animatedTexts: [
-                TypewriterAnimatedText(
-                  'Aircomm',
-                  cursor: "",
-                  textStyle: TextStyle(
-                      color: Costanti.bluAircomm,
-                      fontSize: fontSize32,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "Coco"),
-                  speed: const Duration(milliseconds: 150),
-                ),
-              ],
-              pause: Duration(milliseconds: 100),
-              //repeatForever: true,
-              isRepeatingAnimation: false,
-            ),
+            flex: 1,
+            child: Container(),
+            // AnimatedTextKit(
+            //     animatedTexts: [
+            //       TypewriterAnimatedText(
+            //         'Aircomm',
+            //         cursor: "",
+            //         textStyle: TextStyle(
+            //             color: Costanti.bluAircomm,
+            //             fontSize: fontSize32,
+            //             fontWeight: FontWeight.bold,
+            //             fontFamily: "Coco"),
+            //         speed: const Duration(milliseconds: 150),
+            //       ),
+            //     ],
+            //     pause: Duration(milliseconds: 100),
+            //     //repeatForever: true,
+            //     isRepeatingAnimation: false,
+            //   ),
           ),
         ],
       ),
@@ -274,5 +285,23 @@ class _LoadingScreenFasulloState extends State<LoadingScreenFasullo> {
         ],
       ),
     );
+  }
+
+  Future<bool> doubleTapCloseApp() async {
+    DateTime currentTime = DateTime.now();
+    bool backButton;
+    backButton = backButtonPressedTime == null ||
+        currentTime.difference(backButtonPressedTime!) > Duration(seconds: 2);
+    if (backButton) {
+      backButtonPressedTime = currentTime;
+      Fluttertoast.showToast(
+        msg: "Clicca di nuovo per chiudere l'app",
+        backgroundColor: Colors.black45,
+        textColor: Colors.white,
+      );
+      return false;
+    }
+    SystemNavigator.pop();
+    return true;
   }
 }

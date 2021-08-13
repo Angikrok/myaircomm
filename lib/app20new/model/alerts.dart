@@ -9,6 +9,7 @@ showAlertDialog(BuildContext context) {
     animType: CoolAlertAnimType.scale,
     title: 'Dove Trovare Il Codice Cliente',
     confirmBtnText: 'Ho capito',
+    
     backgroundColor: Colors.transparent,
     context: context,
     type: CoolAlertType.info,

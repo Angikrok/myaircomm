@@ -1,6 +1,7 @@
 import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share_plus/share_plus.dart';
 
 class PdfView extends StatefulWidget {
@@ -24,10 +25,15 @@ class _PdfViewState extends State<PdfView> {
     document = await PDFDocument.fromURL(
         'http://core.aircommservizi.it/admin/a/pdf.php?id=${widget.id}');
 
-    
     setState(() => _isLoading = false);
   }
+@override
+  void dispose() {
+    super.dispose();
+    // TODO: implement dispose
 
+    
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -42,6 +48,12 @@ class _PdfViewState extends State<PdfView> {
                   gradient: LinearGradient(
                       colors: [Color(0xFF00b4d8), Colors.blue[900]!])),
               child: AppBar(
+                actions: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: SvgPicture.asset('assets/icon/paypal.svg'),
+                  ),
+                ],
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.vertical(

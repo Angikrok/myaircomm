@@ -50,8 +50,9 @@ class _FattureScreenState extends State<FattureScreen> {
               ),
             ),
             child: ElencoFatture(
+              selectYear: Container(),
               datiUtenza: widget.datiUtenza,
-              title: 'Elenco fatture',
+              title: 'Fatture da pagare',
               datiInvoice: widget.datiUtenza.not_payed_invoice,
               helper: helper,
               url: url,
@@ -89,7 +90,10 @@ class ElencoFatture extends StatelessWidget {
     required this.helper,
     required this.url,
     required this.title,
+    required this.selectYear,
   }) : super(key: key);
+
+  Widget selectYear;
 
   final List<Invoice> datiInvoice;
   final DatiUtenza datiUtenza;
@@ -145,7 +149,6 @@ class ElencoFatture extends StatelessWidget {
             ),
             Positioned(
               top: 25,
-              right: MediaQuery.of(context).size.width / 1.15,
               child: IconButton(
                 icon: Icon(
                   Icons.menu,
@@ -157,6 +160,7 @@ class ElencoFatture extends StatelessWidget {
                 },
               ),
             ),
+            selectYear,
             Column(
               children: <Widget>[
                 Padding(
@@ -187,6 +191,7 @@ class ElencoFatture extends StatelessWidget {
                   ),
                 ),
                 FattureNonPagate(
+                  title: title,
                   datiInvoice: datiInvoice,
                   datiUtenza: datiUtenza,
                   helper: helper,
@@ -208,10 +213,12 @@ class FattureNonPagate extends StatefulWidget {
     required this.datiInvoice,
     required this.helper,
     required this.url,
+    required this.title,
   }) : super(key: key);
   final DatiUtenza datiUtenza;
   final List<Invoice> datiInvoice;
   final HttpHelper helper;
+  final String title;
   final String url;
 
   @override
@@ -239,18 +246,21 @@ class _FattureNonPagateState extends State<FattureNonPagate> {
             cerchioGrandeDestra(context),
             cerchioPiccoloDestra(context),
             cerchioSinistra(context),
-            Column(
-              children: [
-                Expanded(
-                  child: StileFattura(
-                    datiUtenza: widget.datiUtenza,
-                    datiInvoice: widget.datiInvoice,
-                    helper: widget.helper,
-                    url: widget.url,
+            widget.datiInvoice.isEmpty
+                ? nienteDaVederetxt()
+                : Column(
+                    children: [
+                      Expanded(
+                        child: StileFattura(
+                          title: widget.title,
+                          datiUtenza: widget.datiUtenza,
+                          datiInvoice: widget.datiInvoice,
+                          helper: widget.helper,
+                          url: widget.url,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
           ],
         ),
       ),
@@ -295,6 +305,32 @@ class _FattureNonPagateState extends State<FattureNonPagate> {
       ),
     );
   }
+
+  nienteDaVederetxt() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Center(
+          child: Icon(
+            Icons.visibility_off_sharp,
+            size: 132,
+            color: Colors.black.withOpacity(.2),
+          ),
+        ),
+        Center(
+          child: Text(
+            'Niente da visualizzare',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 17,
+              color: Colors.black.withOpacity(.5),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }
 
 class StileFattura extends StatelessWidget {
@@ -304,16 +340,18 @@ class StileFattura extends StatelessWidget {
     required this.datiInvoice,
     required this.helper,
     required this.url,
+    required this.title,
   }) : super(key: key);
   final DatiUtenza datiUtenza;
   final List<Invoice> datiInvoice;
   final HttpHelper helper;
   final String url;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    // double height = MediaQuery.of(context).size.height;
     return ListView.builder(
       itemCount: datiInvoice.length,
       itemBuilder: (context, index) {
@@ -328,26 +366,48 @@ class StileFattura extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(16),
-                child: Container(
-                  decoration: BoxDecoration(),
-                  width: width,
-                  height: height / 7,
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(40)),
-                    child: Container(
-                      color: Costanti.bluAircomm,
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: Row(
-                              children: [
-                                logo_Data(index),
-                                colonnaInfoFattura(context, index),
-                                arancioniBassi(),
-                              ],
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        PageTransition(
+                            child: PdfView(
+                              id: datiInvoice[index].id_fattura,
                             ),
-                          ),
-                        ],
+                            type: PageTransitionType.fade));
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(32),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          offset: Offset(-5, 6),
+                          blurRadius: 5,
+                          color: Colors.black.withOpacity(.3),
+                        ),
+                      ],
+                    ),
+                    width: width,
+                    height: 100,
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(40)),
+                      child: Container(
+                        color: Colors.blue[900],
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  logo_Data(index),
+                                  colonnaInfoFattura(context, index),
+                                  arancioniBassi(),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -392,7 +452,7 @@ class StileFattura extends StatelessWidget {
                     datiInvoice[index].data,
                     style: TextStyle(
                         color: Colors.white,
-                        fontSize: 11.5,
+                        fontSize: 11,
                         fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -406,45 +466,43 @@ class StileFattura extends StatelessWidget {
 
   Expanded colonnaInfoFattura(BuildContext context, int index) {
     return Expanded(
-      flex: 3,
+      flex: 2,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(
-            height: 10,
-          ),
           Center(
-            child: Text(
-              'ID Fattura : ${datiInvoice[index].id_fattura}',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white),
+            child: Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: Text(
+                'ID Fattura : ${datiInvoice[index].id_fattura}',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white),
+              ),
             ),
           ),
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Totale Fattura:',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
                 Text(
-                  '${datiInvoice[index].tot} €',
+                  'Totale Fattura: ',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w500,
                     color: Colors.white,
                   ),
+                ),
+                Text(
+                  '${datiInvoice[index].tot} €',
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
+                      color: title == 'Fatture da pagare'
+                          ? Color(0xFFff0000)
+                          : Color(0xFF70e000)),
                 ),
               ],
             ),
@@ -523,7 +581,10 @@ Container downloadButton(BuildContext context, String id) {
           Center(
             child: Text(
               "Vedi fattura",
-              style: TextStyle(color: Colors.white, fontSize: 15),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 13.5,
+              ),
             ),
           ),
         ],

@@ -34,7 +34,7 @@ class _ElementiMenuState extends State<ElementiMenu> {
             topLeft: Radius.circular(32),
             topRight: Radius.circular(32),
           ),
-          color: Colors.white.withOpacity(.9)),
+          color: Colors.white.withOpacity(.92)),
       child: Stack(
         children: [
           Positioned(
@@ -119,7 +119,7 @@ class _ElementiMenuState extends State<ElementiMenu> {
         shape: BoxShape.circle,
         boxShadow: <BoxShadow>[
           BoxShadow(
-              color: Colors.white.withOpacity(0.6),
+              color: Colors.white.withOpacity(0.5),
               offset: const Offset(2.0, 4.0),
               blurRadius: 8),
         ],
@@ -127,7 +127,7 @@ class _ElementiMenuState extends State<ElementiMenu> {
       child: ClipRRect(
           borderRadius: const BorderRadius.all(Radius.circular(60.0)),
           child: Icon(
-            Icons.person,
+            Icons.person_rounded,
             size: 120,
           )),
     );
@@ -140,7 +140,7 @@ class _ElementiMenuState extends State<ElementiMenu> {
         color: Color(0xFFfb8500),
       ),
       title: Text(
-        'Fattura in attesa di pagamento',
+        'Fatture da pagare',
         style: TextStyle(
           color: Color(0xFFfb8500),
         ),
@@ -165,7 +165,7 @@ class _ElementiMenuState extends State<ElementiMenu> {
         color: Color(0xFF2d00f7),
       ),
       title: Text(
-        'Storico Fatture',
+        'Fattura pagate',
         style: TextStyle(
           color: Color(0xFF2d00f7),
         ),
@@ -177,7 +177,7 @@ class _ElementiMenuState extends State<ElementiMenu> {
             child: StoricoFatture(
               datiUtenza: widget.datiUtenza,
               cC: dati.id,
-              a: '2021',
+              a: 'Anno',
             ),
             type: PageTransitionType.fade,
           ),
@@ -205,43 +205,43 @@ class _ElementiMenuState extends State<ElementiMenu> {
       },
     );
   }
-
-  Widget bottomSheet() {
-    return Container(
-      height: 100,
-      width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Scegli foto profio'),
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextButton.icon(
-                onPressed: () {
-                  // pickImage(ImageSource.camera);
-                },
-                icon: Icon(Icons.camera),
-                label: Text('Camera'),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextButton.icon(
-                  onPressed: () {
-                    // pickImage(ImageSource.gallery);
-                  },
-                  icon: Icon(Icons.image),
-                  label: Text('Galleria'),
-                ),
-              ),
-            ],
-          )
-        ],
-      ),
-    );
-  }
 }
+//   Widget bottomSheet() {
+//     return Container(
+//       height: 100,
+//       width: MediaQuery.of(context).size.width,
+//       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+//       child: Column(
+//         mainAxisAlignment: MainAxisAlignment.center,
+//         children: [
+//           Text('Scegli foto profio'),
+//           SizedBox(
+//             height: 20,
+//           ),
+//           Row(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: [
+//               TextButton.icon(
+//                 onPressed: () {
+//                   // pickImage(ImageSource.camera);
+//                 },
+//                 icon: Icon(Icons.camera),
+//                 label: Text('Camera'),
+//               ),
+//               Padding(
+//                 padding: const EdgeInsets.all(8.0),
+//                 child: TextButton.icon(
+//                   onPressed: () {
+//                     // pickImage(ImageSource.gallery);
+//                   },
+//                   icon: Icon(Icons.image),
+//                   label: Text('Galleria'),
+//                 ),
+//               ),
+//             ],
+//           )
+//         ],
+//       ),
+//     );
+//   }
+// }

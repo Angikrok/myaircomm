@@ -2,6 +2,8 @@
 import 'package:custom_check_box/custom_check_box.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:my_aircomm/app20new/model/alerts.dart';
+import 'package:my_aircomm/app20new/model/costanti.dart';
 import '/app20new/controller/http_helper.dart';
 import '/app20new/data/dati_login_clienti.dart';
 import '/app20new/data/dati_utenza.dart';
@@ -19,56 +21,56 @@ class Privato extends StatefulWidget {
 class _PrivatoState extends State<Privato> {
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).size.width);
-    return GestureDetector(
-      onTap: () => FocusScope.of(context)
-          .unfocus(), //quando clicchi sul nulla chiude la tastiera se è aperta
-      child: Scaffold(
-        body: Container(
-          //appbar
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color(0xFFCAF0F8),
-                Color(0xFF90E0EF),
-                Color(0xFFADE8F4),
+    return SafeArea(
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context)
+            .unfocus(), //quando clicchi sul nulla chiude la tastiera se è aperta
+        child: Scaffold(
+          body: Container(
+            //appbar
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Costanti.bluAircomm,
+                  Costanti.bluAircomm,
+                ],
+              ),
+            ),
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(11.0),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height / 4,
+                    child: Image.asset(
+                      'assets/icon/logo2.png',
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(24),
+                        topRight: Radius.circular(24),
+                      ),
+                      color: Colors.grey[100],
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        TextAccess(
+                          text: 'Accedi',
+                        ),
+                        Expanded(
+                          child: LoginPrivato(), //body
+                        ),
+                      ],
+                    ),
+                  ),
+                )
               ],
             ),
-          ),
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(11.0),
-                child: Container(
-                  height: MediaQuery.of(context).size.height / 4,
-                  child: Image.asset(
-                    'assets/icon/logo_myaircomm.png',
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(24),
-                      topRight: Radius.circular(24),
-                    ),
-                    color: Colors.grey[100],
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      TextAccess(
-                        text: 'Accedi',
-                      ),
-                      Expanded(
-                        child: LoginPrivato(), //body
-                      ),
-                    ],
-                  ),
-                ),
-              )
-            ],
           ),
         ),
       ),
@@ -158,7 +160,9 @@ class _LoginPrivatoState extends State<LoginPrivato> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Login(context),
+      backgroundColor: Colors.grey[100],
+      body: Container(
+          height: MediaQuery.of(context).size.height, child: Login(context)),
     );
   }
 
@@ -184,9 +188,9 @@ class _LoginPrivatoState extends State<LoginPrivato> {
                   Text(
                     'Data Di Nascita',
                     style: TextStyle(
-                        fontSize: 17.0,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Italico'),
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),
@@ -194,139 +198,148 @@ class _LoginPrivatoState extends State<LoginPrivato> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20),
+                        ),
+                        color: Colors.grey[100],
                       ),
-                      color: Colors.grey[100],
-                    ),
-                    width: MediaQuery.of(context).size.width / 3.5,
-                    child: DropdownButton<String>(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(24),
-                        bottomLeft: Radius.circular(24),
-                      ),
-                      elevation: 0,
-                      dropdownColor: Colors.white.withOpacity(.9),
-                      isExpanded: true,
-                      menuMaxHeight: MediaQuery.of(context).size.height / 2.05,
-                      underline: Text(
-                        '',
-                      ),
-                      icon: Container(),
-                      value: valueG,
-                      items: listG.map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Center(
-                            child: Text(
-                              value,
-                              textAlign: TextAlign.center,
+                      width: MediaQuery.of(context).size.width / 3.5,
+                      child: DropdownButton<String>(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(24),
+                          bottomLeft: Radius.circular(24),
+                        ),
+                        elevation: 0,
+                        dropdownColor: Colors.white.withOpacity(.9),
+                        isExpanded: true,
+                        menuMaxHeight:
+                            MediaQuery.of(context).size.height / 2.05,
+                        underline: Text(
+                          '',
+                        ),
+                        icon: Container(),
+                        value: valueG,
+                        items: listG.map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Center(
+                              child: Text(
+                                value,
+                                textAlign: TextAlign.center,
+                              ),
                             ),
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (valore) {
-                        listG.indexWhere((element) => listG == valore);
-                        //dbHelper.ricordaDaticlienti(g: valore);
+                          );
+                        }).toList(),
+                        onChanged: (valore) {
+                          listG.indexWhere((element) => listG == valore);
+                          //dbHelper.ricordaDaticlienti(g: valore);
 
-                        valueG = valore!;
-                        setState(() {});
-                      },
+                          valueG = valore!;
+                          setState(() {});
+                        },
+                      ),
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20),
+                        ),
+                        color: Colors.grey[100],
                       ),
-                      color: Colors.grey[100],
-                    ),
-                    width: MediaQuery.of(context).size.width / 3.5,
-                    child: DropdownButton<String>(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(24),
-                        bottomLeft: Radius.circular(24),
-                      ),
-                      elevation: 0,
-                      dropdownColor: Colors.white.withOpacity(.9),
-                      isExpanded: true,
-                      menuMaxHeight: MediaQuery.of(context).size.height / 2.05,
-                      underline: Text(
-                        '',
-                      ),
-                      icon: Container(),
-                      value: valueM,
-                      items: listM.map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Center(
-                            child: Text(
-                              value,
-                              textAlign: TextAlign.center,
+                      width: MediaQuery.of(context).size.width / 3.5,
+                      child: DropdownButton<String>(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(24),
+                          bottomLeft: Radius.circular(24),
+                        ),
+                        elevation: 0,
+                        dropdownColor: Colors.white.withOpacity(.9),
+                        isExpanded: true,
+                        menuMaxHeight:
+                            MediaQuery.of(context).size.height / 2.05,
+                        underline: Text(
+                          '',
+                        ),
+                        icon: Container(),
+                        value: valueM,
+                        items: listM.map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Center(
+                              child: Text(
+                                value,
+                                textAlign: TextAlign.center,
+                              ),
                             ),
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (valore) {
-                        listM.indexWhere((element) => listM == valore);
-                        //dbHelper.ricordaDaticlienti(m: valore);
-                        valueM = valore!;
-                        setState(() {});
-                      },
+                          );
+                        }).toList(),
+                        onChanged: (valore) {
+                          listM.indexWhere((element) => listM == valore);
+                          //dbHelper.ricordaDaticlienti(m: valore);
+                          valueM = valore!;
+                          setState(() {});
+                        },
+                      ),
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20),
+                        ),
+                        color: Colors.grey[100],
                       ),
-                      color: Colors.grey[100],
-                    ),
-                    width: MediaQuery.of(context).size.width / 3.5,
-                    child: DropdownButton<String>(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(24),
-                        bottomLeft: Radius.circular(24),
-                      ),
-                      elevation: 0,
-                      dropdownColor: Colors.white.withOpacity(.9),
-                      menuMaxHeight: MediaQuery.of(context).size.height / 2.05,
-                      isExpanded: true,
-                      underline: Text(
-                        '',
-                      ),
-                      icon: Container(),
-                      value: valueA,
-                      items: listA.map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Center(
-                            child: Text(
-                              value,
-                              textAlign: TextAlign.center,
+                      width: MediaQuery.of(context).size.width / 3.5,
+                      child: DropdownButton<String>(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(24),
+                          bottomLeft: Radius.circular(24),
+                        ),
+                        elevation: 0,
+                        dropdownColor: Colors.white.withOpacity(.9),
+                        menuMaxHeight:
+                            MediaQuery.of(context).size.height / 2.05,
+                        isExpanded: true,
+                        underline: Text(
+                          '',
+                        ),
+                        icon: Container(),
+                        value: valueA,
+                        items: listA.map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Center(
+                              child: Text(
+                                value,
+                                textAlign: TextAlign.center,
+                              ),
                             ),
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (valore) {
-                        listA.indexWhere((element) => listA == valore);
-                        //dbHelper.ricordaDaticlienti(a: valore);
-                        valueA = valore!;
-                        setState(() {});
-                      },
+                          );
+                        }).toList(),
+                        onChanged: (valore) {
+                          listA.indexWhere((element) => listA == valore);
+                          //dbHelper.ricordaDaticlienti(a: valore);
+                          valueA = valore!;
+                          setState(() {});
+                        },
+                      ),
                     ),
                   ),
                 ),
@@ -335,105 +348,128 @@ class _LoginPrivatoState extends State<LoginPrivato> {
             SizedBox(
               height: 30.0,
             ),
-            Padding(
-              padding: const EdgeInsets.only(right: 8.0, left: 12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Row(
-                    children: [
-                      CustomCheckBox(
-                        checkedFillColor: Colors.green,
-                        uncheckedFillColor: Colors.white,
-                        uncheckedIconColor: Colors.white,
-                        shouldShowBorder: false,
-                        value: ricordami,
-                        onChanged: (value) {
-                          ricordami = value;
-                          setState(() {});
-                        },
-                      ),
-                      Text('Ricordami'),
-                    ],
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width / 4.3,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width / 3,
-                    height: 50,
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Color(0xFF0096c7),
-                          Color(0xFF023e8a),
-                        ],
-                      ),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(24),
-                      ),
-                    ),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          minimumSize: Size(double.infinity, double.infinity),
-                          primary: Colors.transparent,
-                          elevation: 0),
-                      child: Text('Accedi'),
-                      onPressed: () {
-                        if (ricordami == true) {
-                          salvaDatiCliente();
-                        } else {
-                          cancellaDatiCliente();
-                        }
-
-                        setState(
-                          () {
-                            if (!(formKeyCc.currentState!.validate())) {}
-
-                            helper
-                                .getDatiCliente(
-                              txtCC.text,
-                              valueG.toString(),
-                              valueM.toString(),
-                              valueA.toString(),
-                            )
-                                .catchError((error, stackTrace) {
-                              Fluttertoast.showToast(
-                                  msg: "Errore nell'inserimento dei dati",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.SNACKBAR,
-                                  timeInSecForIosWeb: 22,
-                                  backgroundColor: Colors.red,
-                                  textColor: Colors.white,
-                                  fontSize: 13.0);
-                            }).then(
-                              (DatiUtenza datiUtenza) {
-                                setState(() {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => FattureScreen(
-                                        datiUtenza: datiUtenza,
-                                      ),
-                                    ),
-                                  );
-                                });
-                              },
-                            );
-                          },
-                        );
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    CustomCheckBox(
+                      checkedFillColor: Colors.green,
+                      uncheckedFillColor: Colors.white,
+                      uncheckedIconColor: Colors.white,
+                      shouldShowBorder: false,
+                      value: ricordami,
+                      onChanged: (value) {
+                        ricordami = value;
                         setState(() {});
                       },
                     ),
+                    Text(
+                      'Ricordami',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: .5),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width / 5,
+                ),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Expanded(
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: TextButton(
+                              onPressed: () {
+                                showAlertDialog(
+                                  context,
+                                );
+                              },
+                              child: Text(
+                                'Dove trovo il codice cliente?',
+                                textAlign: TextAlign.center,
+                              )),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                )
+              ],
             ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 3,
-            )
+            bottoneAccedi(context),
           ],
         ),
+      ),
+    );
+  }
+
+  Container bottoneAccedi(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      margin: EdgeInsets.all(12),
+      height: 50,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Costanti.bluAircomm,
+            Costanti.bluAircomm,
+          ],
+        ),
+        borderRadius: BorderRadius.all(
+          Radius.circular(24),
+        ),
+      ),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            minimumSize: Size(double.infinity, double.infinity),
+            primary: Colors.transparent,
+            elevation: 0),
+        child: Text('Accedi'),
+        onPressed: () {
+          if (ricordami == true) {
+            salvaDatiCliente();
+          } else {
+            cancellaDatiCliente();
+          }
+
+          setState(() {
+            if (!(formKeyCc.currentState!.validate())) {}
+
+            helper
+                .getDatiCliente(
+              txtCC.text,
+              valueG.toString(),
+              valueM.toString(),
+              valueA.toString(),
+            )
+                .catchError((error, stackTrace) {
+              Fluttertoast.showToast(
+                  msg: "Errore nell'inserimento dei dati",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.SNACKBAR,
+                  timeInSecForIosWeb: 22,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 13.0);
+            }).then((DatiUtenza datiUtenza) {
+              setState(() {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FattureScreen(
+                      datiUtenza: datiUtenza,
+                    ),
+                  ),
+                );
+              });
+            });
+          });
+          setState(() {});
+        },
       ),
     );
   }
@@ -453,4 +489,3 @@ class _LoginPrivatoState extends State<LoginPrivato> {
     dbHelper.cancellaDatiClienti();
   }
 }
-

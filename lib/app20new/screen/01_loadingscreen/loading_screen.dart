@@ -1,5 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import '../../model/costanti.dart';
 import '../../model/button.dart';
@@ -24,6 +26,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   String textMessage = "";
   bool isError = false;
   bool internet = false;
+  DateTime? backButtonPressedTime;
 
   @override
   void initState() {
@@ -36,31 +39,34 @@ class _LoadingScreenState extends State<LoadingScreen> {
     double width = MediaQuery.of(context).size.width;
     // double fontsize32 = width/;
     return Scaffold(
-      body: Container(
-        //sfondo pagina
-        decoration: sfondoPagina(),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            //spaziatura iniziale
-            spaziaturaWdg(spazioIniziale),
-            //logo aircomm
-            logoAircommWdg(logoMyAircomm),
-            //scritta my aircomm
-            scrittaMyAircommWdg(32, scrittaMyAircomm),
-            //animazione caricamento
-            textMessage != 'Scegli il profilo:'
-                ? animazioneCaricamentoWdg(animazioneCaricamento, width)
-                : Container(),
-            //messaggio errore con pulsante riprova
+      body: WillPopScope(
+        onWillPop: doubleTapCloseApp,
+        child: Container(
+          //sfondo pagina
+          decoration: sfondoPagina(),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              //spaziatura iniziale
+              spaziaturaWdg(spazioIniziale),
+              //logo aircomm
+              logoAircommWdg(logoMyAircomm),
+              //scritta my aircomm
+              scrittaMyAircommWdg(32, scrittaMyAircomm),
+              //animazione caricamento
+              textMessage != 'Scegli il profilo:'
+                  ? animazioneCaricamentoWdg(animazioneCaricamento, width)
+                  : Container(),
+              //messaggio errore con pulsante riprova
 
-            graphicErrorMsgWithButtonWdg(17, messaggioDiErrore),
-            if (textMessage == 'Scegli il profilo:')
-              selectionBusinssPrivateWdg(17, messaggioDiErrore),
+              graphicErrorMsgWithButtonWdg(17, messaggioDiErrore),
+              if (textMessage == 'Scegli il profilo:')
+                selectionBusinssPrivateWdg(17, messaggioDiErrore),
 
-            //spazio finale
-            spaziaturaWdg(spazioFinale),
-          ],
+              //spazio finale
+              spaziaturaWdg(spazioFinale),
+            ],
+          ),
         ),
       ),
     );
@@ -70,9 +76,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
     return BoxDecoration(
       gradient: LinearGradient(
         colors: [
-          Color(0xFFCAF0F8),
-          Color(0xFF90E0EF),
-          Color(0xFFADE8F4),
+          Colors.white,
+          Colors.grey[100]!,
+          Colors.grey[350]!,
         ],
         transform: GradientRotation(-45),
       ),
@@ -125,15 +131,19 @@ class _LoadingScreenState extends State<LoadingScreen> {
         children: [
           //scritta my aircomm
           Expanded(
-            flex: 135,
+            flex: 1,
+            child: Container(),
+          ),
+          Expanded(
+            flex: 2,
             child: AnimatedTextKit(
               animatedTexts: [
                 TypewriterAnimatedText(
-                  'My',
+                  'My Aircomm',
                   textAlign: TextAlign.end,
                   cursor: "",
                   textStyle: TextStyle(
-                      color: Costanti.arancioneAircomm,
+                      color: Costanti.bluAircomm,
                       fontSize: fontSize32,
                       fontWeight: FontWeight.bold,
                       fontFamily: "Coco"),
@@ -144,24 +154,25 @@ class _LoadingScreenState extends State<LoadingScreen> {
             ),
           ),
           Expanded(
-            flex: 192,
-            child: AnimatedTextKit(
-              animatedTexts: [
-                TypewriterAnimatedText(
-                  'Aircomm',
-                  cursor: "",
-                  textStyle: TextStyle(
-                      color: Costanti.bluAircomm,
-                      fontSize: fontSize32,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "Coco"),
-                  speed: const Duration(milliseconds: 150),
-                ),
-              ],
-              pause: Duration(milliseconds: 100),
-              //repeatForever: true,
-              isRepeatingAnimation: false,
-            ),
+            flex: 1,
+            child: Container(),
+            // AnimatedTextKit(
+            //     animatedTexts: [
+            //       TypewriterAnimatedText(
+            //         'Aircomm',
+            //         cursor: "",
+            //         textStyle: TextStyle(
+            //             color: Costanti.bluAircomm,
+            //             fontSize: fontSize32,
+            //             fontWeight: FontWeight.bold,
+            //             fontFamily: "Coco"),
+            //         speed: const Duration(milliseconds: 150),
+            //       ),
+            //     ],
+            //     pause: Duration(milliseconds: 100),
+            //     //repeatForever: true,
+            //     isRepeatingAnimation: false,
+            //   ),
           ),
         ],
       ),
@@ -390,5 +401,23 @@ class _LoadingScreenState extends State<LoadingScreen> {
         });
       }
     });
+  }
+
+  Future<bool> doubleTapCloseApp() async {
+    DateTime currentTime = DateTime.now();
+    bool backButton;
+    backButton = backButtonPressedTime == null ||
+        currentTime.difference(backButtonPressedTime!) > Duration(seconds: 2);
+    if (backButton) {
+      backButtonPressedTime = currentTime;
+      Fluttertoast.showToast(
+        msg: "Clicca di nuovo per chiudere l'app",
+        backgroundColor: Colors.black45,
+        textColor: Colors.white,
+      );
+      return false;
+    }
+    SystemNavigator.pop();
+    return true;
   }
 }
