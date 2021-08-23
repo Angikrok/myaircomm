@@ -34,7 +34,7 @@ class _ElementiMenuState extends State<ElementiMenu> {
             topLeft: Radius.circular(32),
             topRight: Radius.circular(32),
           ),
-          color: Colors.white.withOpacity(.92)),
+          color: Colors.white.withOpacity(.905)),
       child: Stack(
         children: [
           Positioned(

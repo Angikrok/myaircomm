@@ -107,9 +107,8 @@ class _LoadingScreenState extends State<LoadingScreen> {
           Container(
             width: width / 10,
             child: CircularProgressIndicator.adaptive(
-              backgroundColor: Costanti.bluAircomm,
-              valueColor:
-                  AlwaysStoppedAnimation<Color>(Costanti.arancioneAircomm),
+              backgroundColor: bluAircomm,
+              valueColor: AlwaysStoppedAnimation<Color>(arancioneAircomm),
               strokeWidth: 2,
             ),
           ),
@@ -143,7 +142,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
                   textAlign: TextAlign.end,
                   cursor: "",
                   textStyle: TextStyle(
-                      color: Costanti.bluAircomm,
+                      color: bluAircomm,
                       fontSize: fontSize32,
                       fontWeight: FontWeight.bold,
                       fontFamily: "Coco"),
@@ -229,9 +228,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
                       style: TextStyle(
                           fontFamily: "CocoItalic",
                           fontSize: fontSize17,
-                          color: isError || internet
-                              ? Colors.red
-                              : Costanti.bluAircomm),
+                          color: isError || internet ? Colors.red : bluAircomm),
                     ),
                   ),
                 ),
@@ -268,8 +265,8 @@ class _LoadingScreenState extends State<LoadingScreen> {
                                   decoration: BoxDecoration(
                                       gradient: LinearGradient(
                                         colors: [
-                                          Costanti.bluAircomm,
-                                          Costanti.bluAircomm.withOpacity(.4)
+                                          bluAircomm,
+                                          bluAircomm.withOpacity(.4)
                                         ],
                                         transform: GradientRotation(-45),
                                       ),

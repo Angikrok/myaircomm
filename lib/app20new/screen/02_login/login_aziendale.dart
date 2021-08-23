@@ -30,8 +30,8 @@ class _AziendaleState extends State<Aziendale> {
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Costanti.bluAircomm,
-                Costanti.bluAircomm,
+                bluAircomm,
+                bluAircomm,
               ],
             ),
           ),
@@ -259,8 +259,8 @@ class _LoginAziendaState extends State<LoginAzienda> {
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Costanti.bluAircomm,
-            Costanti.bluAircomm,
+            bluAircomm,
+            bluAircomm,
           ],
         ),
         borderRadius: BorderRadius.all(

@@ -31,8 +31,8 @@ class _PrivatoState extends State<Privato> {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Costanti.bluAircomm,
-                  Costanti.bluAircomm,
+                bluAircomm,
+                  bluAircomm,
                 ],
               ),
             ),
@@ -415,8 +415,8 @@ class _LoginPrivatoState extends State<LoginPrivato> {
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Costanti.bluAircomm,
-            Costanti.bluAircomm,
+            bluAircomm,
+            bluAircomm,
           ],
         ),
         borderRadius: BorderRadius.all(

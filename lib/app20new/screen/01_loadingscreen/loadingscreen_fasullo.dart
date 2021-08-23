@@ -90,9 +90,9 @@ class _LoadingScreenFasulloState extends State<LoadingScreenFasullo> {
           Container(
             width: width / 10,
             child: CircularProgressIndicator.adaptive(
-              backgroundColor: Costanti.bluAircomm,
+              backgroundColor: bluAircomm,
               valueColor:
-                  AlwaysStoppedAnimation<Color>(Costanti.arancioneAircomm),
+                  AlwaysStoppedAnimation<Color>(arancioneAircomm),
               strokeWidth: 2,
             ),
           ),
@@ -126,7 +126,7 @@ class _LoadingScreenFasulloState extends State<LoadingScreenFasullo> {
                   textAlign: TextAlign.end,
                   cursor: "",
                   textStyle: TextStyle(
-                      color: Costanti.bluAircomm,
+                      color: bluAircomm,
                       fontSize: fontSize32,
                       fontWeight: FontWeight.bold,
                       fontFamily: "Coco"),
@@ -212,7 +212,7 @@ class _LoadingScreenFasulloState extends State<LoadingScreenFasullo> {
                       style: TextStyle(
                           fontFamily: "CocoItalic",
                           fontSize: fontSize17,
-                          color: Costanti.bluAircomm),
+                          color: bluAircomm),
                     ),
                   ),
                 ),

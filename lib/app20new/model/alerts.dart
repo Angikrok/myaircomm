@@ -53,7 +53,7 @@ Future<bool> onWillPop(DateTime? backButtonPressedTime) async {
       backButtonPressedTime = currentTime;
       Fluttertoast.showToast(
           msg: "Clicca di nuovo per chiudere l'app",
-          backgroundColor: Costanti.arancioneAircomm,
+          backgroundColor: arancioneAircomm,
           textColor: Colors.white);
       return false;
     }

@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'dart:ui';
 
 class Costanti {
   static double width = WidgetsBinding.instance!.window.physicalSize.width;
@@ -7,6 +8,7 @@ class Costanti {
   static double size35 = (width / 30.75);
   static double size17 = (width / 63.52);
   static double size132 = (width / 8.18);
-  static const Color bluAircomm = Color(0xFF0078e3);
-  static const Color arancioneAircomm = Color(0xFFfb6600);
 }
+
+const Color bluAircomm = Color(0xFF0078e3);
+const Color arancioneAircomm = Color(0xFFfb6600);

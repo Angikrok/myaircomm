@@ -12,7 +12,6 @@ import '../../data/invoice.dart';
 import '/app20new/controller/http_helper.dart';
 import '/app20new/data/dati_utenza.dart';
 import 'drawer/elementi_menu.dart';
-import 'dart:math' as math;
 
 class FattureScreen extends StatefulWidget {
   FattureScreen({
@@ -210,7 +209,7 @@ class FattureNonPagate extends StatefulWidget {
 }
 
 class _FattureNonPagateState extends State<FattureNonPagate>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late AnimationController animationController;
 
   @override
@@ -239,11 +238,7 @@ class _FattureNonPagateState extends State<FattureNonPagate>
         Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: animationController,
-        curve: const Interval(
-          (1 / 9) * 2,
-          1.0,
-          curve: Curves.fastOutSlowIn,
-        ),
+        curve: Curves.fastOutSlowIn,
       ),
     );
     return Expanded(
@@ -319,8 +314,8 @@ class _FattureNonPagateState extends State<FattureNonPagate>
       right: MediaQuery.of(context).size.width / 1.4,
       child: CircleAvatar(
         radius: 150,
-        backgroundColor: Colors.white.withOpacity(
-          .3,
+        backgroundColor: Colors.grey.withOpacity(
+          .17,
         ),
       ),
     );
@@ -374,86 +369,81 @@ class StileFattura extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Theme.of(context).backgroundColor;
     double width = MediaQuery.of(context).size.width;
+    print(width.toStringAsFixed(20));
     // double height = MediaQuery.of(context).size.height;
     return AnimatedBuilder(
       animation: animationController,
-      builder: (context, child) {
+      builder: (context, _) {
         return FadeTransition(
           opacity: animation,
           child: Transform(
             transform:
                 Matrix4.translationValues(100 * (1.0 - animation.value), 0, 0),
-            child: Stack(
-              children: [
-                ListView.builder(
-                  itemCount: datiInvoice.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(24),
-                        ),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    PageTransition(
-                                        child: PdfView(
-                                          id: datiInvoice[index].id_fattura,
-                                        ),
-                                        type: PageTransitionType.fade));
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(32),
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: Offset(-5, 6),
-                                      blurRadius: 5,
-                                      color: Colors.black.withOpacity(.3),
-                                    ),
-                                  ],
-                                ),
-                                width: width,
-                                height: 100,
-                                child: ClipRRect(
-                                  borderRadius:
-                                      const BorderRadius.all(Radius.circular(40)),
-                                  child: Container(
-                                    color: Colors.blue[900],
-                                    child: Column(
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: datiInvoice.length,
+              itemBuilder: (context, index) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              child: PdfView(
+                                id: datiInvoice[index].id_fattura,
+                              ),
+                              type: PageTransitionType.fade,
+                            ),
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(32),
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                offset: Offset(-5, 6),
+                                blurRadius: 5,
+                                color: Colors.black.withOpacity(.3),
+                              ),
+                            ],
+                          ),
+                          width: width,
+                          height: 100,
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(38),
+                            ),
+                            child: Container(
+                              color: Colors.blue[900]!,
+                              child: Column(
+                                children: [
+                                  Expanded(
+                                    child: Row(
                                       children: [
-                                        Expanded(
-                                          child: Row(
-                                            children: [
-                                              logo_Data(index),
-                                              colonnaInfoFattura(context, index),
-                                              arancioniBassi(),
-                                            ],
-                                          ),
-                                        ),
+                                        logo_Data(index),
+                                        colonnaInfoFattura(context, index),
+                                        arancioniBassi(),
                                       ],
                                     ),
                                   ),
-                                ),
+                                ],
                               ),
                             ),
                           ),
-                        ],
+                        ),
                       ),
-                    );
-                  },
-                ),
-              ],
+                    ),
+                  ],
+                );
+              },
             ),
           ),
         );
@@ -556,7 +546,7 @@ class StileFattura extends StatelessWidget {
 
   Expanded bottoneVediFattura(BuildContext context, int index) {
     return Expanded(
-        flex: 1,
+        flex: MediaQuery.of(context).size.width <= 340 ? 2 : 1,
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: downloadButton(context, datiInvoice[index].id_fattura),
@@ -582,7 +572,7 @@ class StileFattura extends StatelessWidget {
             top: 40,
             child: CircleAvatar(
               radius: 45,
-              backgroundColor: Costanti.arancioneAircomm,
+              backgroundColor: arancioneAircomm,
             ),
           ),
         ],

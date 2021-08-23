@@ -27,11 +27,12 @@ class _PdfViewState extends State<PdfView> {
 
     setState(() => _isLoading = false);
   }
-@override
+
+  @override
   void dispose() {
     super.dispose();
-    
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -67,6 +68,7 @@ class _PdfViewState extends State<PdfView> {
             ? Center(child: CircularProgressIndicator())
             : SafeArea(
                 child: PDFViewer(
+                  progressIndicator: CircularProgressIndicator.adaptive(),
                   indicatorText: Colors.white,
                   showPicker: false,
                   showNavigation: false,
@@ -102,10 +104,9 @@ class _PdfViewState extends State<PdfView> {
 
   void share(BuildContext context, String file) {
     String message =
-        'http://core.aircommservizi.it/admin/a/pdf.php?id=${widget.id}│';
+        'http://core.aircommservizi.it/admin/a/pdf.php?id=${widget.id}';
     RenderBox? box = context.findRenderObject() as RenderBox;
     Share.share(message,
-        subject: '',
         sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
   }
 }
