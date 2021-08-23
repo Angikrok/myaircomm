@@ -1,9 +1,8 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:my_aircomm/app20new/data/dati_utenza.dart';
+import 'package:my_aircomm/app20new/model/alerts.dart';
 import '/app20new/controller/http_helper.dart';
 import 'elementi_menu.dart';
 
@@ -27,7 +26,9 @@ class _ProfileState extends State<Profile> {
     double width = MediaQuery.of(context).size.width;
     return SafeArea(
       child: WillPopScope(
-        onWillPop: onWillPop,
+        onWillPop: () {
+          return onWillPop(backButtonPressedTime);
+        },
         child: Scaffold(
           key: _globalKey,
           drawer: ElementiMenu(
@@ -127,23 +128,6 @@ class _ProfileState extends State<Profile> {
   }
 
   DateTime? backButtonPressedTime;
-  Future<bool> onWillPop() async {
-    DateTime currentTime = DateTime.now();
-    bool backButton;
-    backButton = backButtonPressedTime == null ||
-        currentTime.difference(backButtonPressedTime!) > Duration(seconds: 2);
-    if (backButton) {
-      backButtonPressedTime = currentTime;
-      Fluttertoast.showToast(
-        msg: "Clicca di nuovo per chiudere l'app",
-        backgroundColor: Colors.black45,
-        textColor: Colors.white,
-      );
-      return false;
-    }
-    SystemNavigator.pop();
-    return true;
-  }
 }
 
 class ProfileDetails extends StatefulWidget {

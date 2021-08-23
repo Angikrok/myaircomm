@@ -30,8 +30,6 @@ class _PdfViewState extends State<PdfView> {
 @override
   void dispose() {
     super.dispose();
-    // TODO: implement dispose
-
     
   }
   @override

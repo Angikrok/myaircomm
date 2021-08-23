@@ -4,8 +4,7 @@
 // elenco fatture
 // ignore_for_file: must_be_immutable
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:my_aircomm/app20new/model/alerts.dart';
 import 'package:my_aircomm/app20new/model/costanti.dart';
 import 'package:page_transition/page_transition.dart';
 import 'bill_pdf.dart';
@@ -13,6 +12,7 @@ import '../../data/invoice.dart';
 import '/app20new/controller/http_helper.dart';
 import '/app20new/data/dati_utenza.dart';
 import 'drawer/elementi_menu.dart';
+import 'dart:math' as math;
 
 class FattureScreen extends StatefulWidget {
   FattureScreen({
@@ -39,7 +39,9 @@ class _FattureScreenState extends State<FattureScreen> {
     return SafeArea(
       child: Scaffold(
         body: WillPopScope(
-          onWillPop: onWillPop,
+          onWillPop: () {
+            return onWillPop(backButtonPressedTime);
+          },
           child: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -61,24 +63,6 @@ class _FattureScreenState extends State<FattureScreen> {
         ),
       ),
     );
-  }
-
-  Future<bool> onWillPop() async {
-    DateTime currentTime = DateTime.now();
-    bool backButton;
-    backButton = backButtonPressedTime == null ||
-        currentTime.difference(backButtonPressedTime!) > Duration(seconds: 2);
-    if (backButton) {
-      backButtonPressedTime = currentTime;
-      Fluttertoast.showToast(
-        msg: "Clicca di nuovo per chiudere l'app",
-        backgroundColor: Colors.black45,
-        textColor: Colors.white,
-      );
-      return false;
-    }
-    SystemNavigator.pop();
-    return true;
   }
 }
 
@@ -125,7 +109,7 @@ class ElencoFatture extends StatelessWidget {
           children: [
             Positioned(
               top: 5,
-              left: MediaQuery.of(context).size.width / 1.4,
+              right: -120,
               child: CircleAvatar(
                 radius: 120,
                 backgroundColor: Color(0xFF023e8a),
@@ -133,7 +117,7 @@ class ElencoFatture extends StatelessWidget {
             ),
             Positioned(
               top: 2,
-              right: MediaQuery.of(context).size.width / 1.5,
+              left: -150,
               child: CircleAvatar(
                 radius: 135,
                 backgroundColor: Color(0xFF40b6c7),
@@ -141,7 +125,7 @@ class ElencoFatture extends StatelessWidget {
             ),
             Positioned(
               top: 50,
-              left: MediaQuery.of(context).size.width / 1.45,
+              right: -115,
               child: CircleAvatar(
                 radius: 120,
                 backgroundColor: Color(0xFF0096c7),
@@ -225,9 +209,43 @@ class FattureNonPagate extends StatefulWidget {
   State<FattureNonPagate> createState() => _FattureNonPagateState();
 }
 
-class _FattureNonPagateState extends State<FattureNonPagate> {
+class _FattureNonPagateState extends State<FattureNonPagate>
+    with SingleTickerProviderStateMixin {
+  late AnimationController animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    animationController = AnimationController(
+      vsync: this,
+      duration: (Duration(milliseconds: 1250)),
+    );
+    animationController.forward();
+  }
+
+  void dispose() {
+    if (animationController.isCompleted == false) {
+      animationController.stop();
+    } else {
+      animationController.dispose();
+    }
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final Animation<double> animation =
+        Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(
+          (1 / 9) * 2,
+          1.0,
+          curve: Curves.fastOutSlowIn,
+        ),
+      ),
+    );
     return Expanded(
       child: Container(
         decoration: BoxDecoration(
@@ -252,6 +270,8 @@ class _FattureNonPagateState extends State<FattureNonPagate> {
                     children: [
                       Expanded(
                         child: StileFattura(
+                          animation: animation,
+                          animationController: animationController,
                           title: widget.title,
                           datiUtenza: widget.datiUtenza,
                           datiInvoice: widget.datiInvoice,
@@ -334,86 +354,107 @@ class _FattureNonPagateState extends State<FattureNonPagate> {
 }
 
 class StileFattura extends StatelessWidget {
-  StileFattura({
-    Key? key,
-    required this.datiUtenza,
-    required this.datiInvoice,
-    required this.helper,
-    required this.url,
-    required this.title,
-  }) : super(key: key);
+  StileFattura(
+      {Key? key,
+      required this.datiUtenza,
+      required this.datiInvoice,
+      required this.helper,
+      required this.url,
+      required this.title,
+      required this.animationController,
+      required this.animation})
+      : super(key: key);
   final DatiUtenza datiUtenza;
   final List<Invoice> datiInvoice;
   final HttpHelper helper;
   final String url;
   final String title;
+  AnimationController animationController;
+  Animation<double> animation;
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     // double height = MediaQuery.of(context).size.height;
-    return ListView.builder(
-      itemCount: datiInvoice.length,
-      itemBuilder: (context, index) {
-        return Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(
-              Radius.circular(24),
-            ),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        PageTransition(
-                            child: PdfView(
-                              id: datiInvoice[index].id_fattura,
-                            ),
-                            type: PageTransitionType.fade));
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(32),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          offset: Offset(-5, 6),
-                          blurRadius: 5,
-                          color: Colors.black.withOpacity(.3),
+    return AnimatedBuilder(
+      animation: animationController,
+      builder: (context, child) {
+        return FadeTransition(
+          opacity: animation,
+          child: Transform(
+            transform:
+                Matrix4.translationValues(100 * (1.0 - animation.value), 0, 0),
+            child: Stack(
+              children: [
+                ListView.builder(
+                  itemCount: datiInvoice.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(24),
                         ),
-                      ],
-                    ),
-                    width: width,
-                    height: 100,
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.all(Radius.circular(40)),
-                      child: Container(
-                        color: Colors.blue[900],
-                        child: Column(
-                          children: [
-                            Expanded(
-                              child: Row(
-                                children: [
-                                  logo_Data(index),
-                                  colonnaInfoFattura(context, index),
-                                  arancioniBassi(),
-                                ],
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    PageTransition(
+                                        child: PdfView(
+                                          id: datiInvoice[index].id_fattura,
+                                        ),
+                                        type: PageTransitionType.fade));
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(32),
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      offset: Offset(-5, 6),
+                                      blurRadius: 5,
+                                      color: Colors.black.withOpacity(.3),
+                                    ),
+                                  ],
+                                ),
+                                width: width,
+                                height: 100,
+                                child: ClipRRect(
+                                  borderRadius:
+                                      const BorderRadius.all(Radius.circular(40)),
+                                  child: Container(
+                                    color: Colors.blue[900],
+                                    child: Column(
+                                      children: [
+                                        Expanded(
+                                          child: Row(
+                                            children: [
+                                              logo_Data(index),
+                                              colonnaInfoFattura(context, index),
+                                              arancioniBassi(),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ),
+                    );
+                  },
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },

@@ -2,9 +2,8 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:my_aircomm/app20new/data/dati_utenza.dart';
+import 'package:my_aircomm/app20new/model/alerts.dart';
 import 'package:page_transition/page_transition.dart';
 import '/app20new/controller/http_helper.dart';
 import '../../../data/invoice.dart';
@@ -50,7 +49,9 @@ class _StoricoFattureState extends State<StoricoFatture> {
     return SafeArea(
       child: Scaffold(
         body: WillPopScope(
-          onWillPop: doubleTapCloseApp,
+          onWillPop: () {
+            return onWillPop(backButtonPressedTime);
+          },
           child: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -126,23 +127,5 @@ class _StoricoFattureState extends State<StoricoFatture> {
         ),
       ),
     );
-  }
-
-  Future<bool> doubleTapCloseApp() async {
-    DateTime currentTime = DateTime.now();
-    bool backButton;
-    backButton = backButtonPressedTime == null ||
-        currentTime.difference(backButtonPressedTime!) > Duration(seconds: 2);
-    if (backButton) {
-      backButtonPressedTime = currentTime;
-      Fluttertoast.showToast(
-        msg: "Clicca di nuovo per chiudere l'app",
-        backgroundColor: Colors.black45,
-        textColor: Colors.white,
-      );
-      return false;
-    }
-    SystemNavigator.pop();
-    return true;
   }
 }
