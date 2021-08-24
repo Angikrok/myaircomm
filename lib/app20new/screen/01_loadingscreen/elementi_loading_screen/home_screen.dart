@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:my_aircomm/app20new/model/costanti.dart';
-import 'package:my_aircomm/app20new/model/custom_clippers/header_screen.dart';
-import 'package:my_aircomm/app20new/model/custom_clippers/linea_arancione.dart';
-import 'package:my_aircomm/app20new/model/custom_clippers/linea_blu.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import '/app20new/controller/http_helper.dart';
+import '/app20new/model/costanti.dart';
+import '/app20new/model/custom_clippers/header_screen.dart';
+import '/app20new/model/custom_clippers/linea_arancione.dart';
+import '/app20new/model/custom_clippers/linea_blu.dart';
 import 'header.dart';
 import 'businessprivateselect.dart';
 import 'text_animato.dart';
@@ -24,6 +26,9 @@ class _HomeScreenState extends State<HomeScreen>
   late final Animation<double> lineaArancione;
   late final Animation<double> headerScreen;
   late final Animation<double> lineaBlu;
+  String textMessage = "";
+  bool isError = false;
+  bool internet = false;
 
   @override
   void initState() {
@@ -174,5 +179,65 @@ class _HomeScreenState extends State<HomeScreen>
       //colore della parte superiore dello schermo (header)
       child: Container(color: bluAircomm),
     );
+  }
+
+  statusChecker() {
+    InternetConnectionChecker().onStatusChange.listen((event) {
+      //hasInternet è un bool che serve a capire lo status della connessione. vero connessione ok falso non connesso
+      final hasInternet = event == InternetConnectionStatus.connected;
+      setState(() {
+        internet = false;
+
+        textMessage = 'verifica connettività';
+      });
+      //se è connesso procedi ai test successivi se no torna errore
+      if (hasInternet) {
+        print('cellulare online: passo alla fase successiva');
+        internet = false;
+        setState(() {
+          textMessage = 'verifica server';
+        });
+        statusChecker2();
+      } else {
+        internet = true;
+        setState(() {
+          textMessage = 'Nessuna connessione ad internet';
+        });
+      }
+    });
+  }
+
+  statusChecker2() {
+    HttpHelper helper = HttpHelper();
+    helper.check().then((value) {
+      if (value) {
+        print('server online: passo alla fase successiva');
+        isError = false;
+        setState(() {
+          textMessage = 'verifica servizi';
+        });
+        helper.serviceStatus().then((value) {
+          if (value) {
+            print('servizio online: passo alla fase successiva');
+            isError = false;
+            setState(() {
+              textMessage = 'Scegli il profilo:';
+            });
+          } else {
+            print('servizio offline mostro errore');
+            isError = true;
+            setState(() {
+              textMessage = 'Servizio Offline';
+            });
+          }
+        });
+      } else {
+        print('server offline mostro errore');
+        isError = true;
+        setState(() {
+          textMessage = 'Server Offline';
+        });
+      }
+    });
   }
 }
