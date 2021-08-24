@@ -47,12 +47,7 @@ class _PdfViewState extends State<PdfView> {
                   gradient: LinearGradient(
                       colors: [Color(0xFF00b4d8), Colors.blue[900]!])),
               child: AppBar(
-                actions: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: SvgPicture.asset('assets/icon/paypal.svg'),
-                  ),
-                ],
+             
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.vertical(

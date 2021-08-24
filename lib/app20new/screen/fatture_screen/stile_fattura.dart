@@ -11,6 +11,7 @@ import 'package:my_aircomm/app20new/data/invoice.dart';
 import 'package:my_aircomm/app20new/model/costanti.dart';
 import 'package:my_aircomm/app20new/screen/03_logged/bill_pdf.dart';
 import 'package:my_aircomm/app20new/screen/fatture_screen/fatture_screen.dart';
+import 'package:my_aircomm/main.dart';
 import 'package:page_transition/page_transition.dart';
 
 class StileFattura extends StatefulWidget {
@@ -267,43 +268,53 @@ class _StileFatturaState extends State<StileFattura> {
                       topLeft: Radius.circular(50),
                     ),
                   ),
-                  builder: (context) => Container(
-                    height: MediaQuery.of(context).size.height - 115,
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.all(24),
-                          width: MediaQuery.of(context).size.width - 200,
-                          height: 5,
-                          decoration: BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(24))),
-                        ),
-                        Text('Scannerizza il BARCODE'),
-                        Spacer(),
-                        Transform.rotate(
-                          angle: 90 * pi / 180,
-                          child: BarcodeWidget(
-                            drawText: false,
-                            barcode: Barcode.code128(
-                              useCode128A: true,
-                              useCode128B: false,
-                              useCode128C: false,
-                            ),
-                            data: '31254624',
-                            width: MediaQuery.of(context).size.height,
-                            height: 80,
-                          ),
-                        ),
-                        Spacer()
-                      ],
-                    ),
-                  ),
+                  builder: (context) => barCodeBottomSheet(context),
                 );
               },
             ),
           ),
+        ],
+      ),
+    );
+  }
+
+  Container barCodeBottomSheet(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height - 115,
+      child: Column(
+        children: [
+          Container(
+            margin: EdgeInsets.all(24),
+            width: MediaQuery.of(context).size.width - 200,
+            height: 5,
+            decoration: BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.all(Radius.circular(24))),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Text(
+              'Codice a barre per il sistema di pagamento digitale',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 16, fontFamily: 'Coco'),
+            ),
+          ),
+          Spacer(),
+          Transform.rotate(
+            angle: 90 * pi / 180,
+            child: BarcodeWidget(
+              drawText: false,
+              barcode: Barcode.code128(
+                useCode128A: true,
+                useCode128B: false,
+                useCode128C: false,
+              ),
+              data: '31254624',
+              width: MediaQuery.of(context).size.height,
+              height: 80,
+            ),
+          ),
+          Spacer()
         ],
       ),
     );

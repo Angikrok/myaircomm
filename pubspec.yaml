@@ -48,6 +48,7 @@ dependencies:
   animated_text_kit: ^4.2.1
   barcode: ^2.1.0
   barcode_widget: ^2.0.1
+  screen_brightness: ^0.0.4
    
 
 
