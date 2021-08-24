@@ -366,7 +366,6 @@ class StileFattura extends StatelessWidget {
   final String title;
   AnimationController animationController;
   Animation<double> animation;
-
   @override
   Widget build(BuildContext context) {
     Theme.of(context).backgroundColor;
@@ -430,7 +429,7 @@ class StileFattura extends StatelessWidget {
                                       children: [
                                         logo_Data(index),
                                         colonnaInfoFattura(context, index),
-                                        arancioniBassi(),
+                                        arancioniBassi(context),
                                       ],
                                     ),
                                   ),
@@ -553,7 +552,9 @@ class StileFattura extends StatelessWidget {
         ));
   }
 
-  Expanded arancioniBassi() {
+  Expanded arancioniBassi(
+    BuildContext context,
+  ) {
     return Expanded(
       flex: 1,
       child: Stack(
@@ -575,6 +576,39 @@ class StileFattura extends StatelessWidget {
               backgroundColor: arancioneAircomm,
             ),
           ),
+          Positioned(
+              right: -5,
+              top: 45,
+              child: ElevatedButton(
+                child: Icon(
+                  Icons.bar_chart_sharp,
+                  color: kWhite,
+                ),
+                // child: SvgPicture.asset(
+                //   'assets/icon/barcode.svg',
+                //   height: 35,
+                // ),
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.transparent, elevation: 0),
+                onPressed: () {
+                  showModalBottomSheet(
+                      context: context,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(50),
+                          topLeft: Radius.circular(50),
+                        ),
+                      ),
+                      builder: (context) => Container(
+                            height: 500,
+                            child: Column(
+                              children: [
+                                SizedBox(child: Icon(Icons.read_more)),
+                              ],
+                            ),
+                          ));
+                },
+              )),
         ],
       ),
     );

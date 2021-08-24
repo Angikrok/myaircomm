@@ -13,6 +13,11 @@ class Logo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 100, width: 280, child: Image.asset('assets/icon/logo2.png'));
+      height: 100,
+      width: 280,
+      child: Image.asset(
+        'assets/icon/logo2.png',
+      ),
+    );
   }
 }
