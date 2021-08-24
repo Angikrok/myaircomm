@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_aircomm/app20new/data/dati_utenza.dart';
-import 'package:my_aircomm/app20new/screen/01_loadingscreen/loadingscreen_fasullo.dart';
+import 'package:my_aircomm/app20new/screen/01_loadingscreen/elementi_loading_screen/home_screen.dart';
 import 'package:page_transition/page_transition.dart';
-import '../fatture_screen.dart';
+import '../../fatture_screen/fatture_screen.dart';
 import 'storico_fatture.dart';
 
 // ignore: must_be_immutable
@@ -200,7 +200,7 @@ class _ElementiMenuState extends State<ElementiMenu> {
         Navigator.pushReplacement(
             context,
             PageTransition(
-                child: LoadingScreenFasullo(),
+                child: HomeScreen(),
                 type: PageTransitionType.leftToRight));
       },
     );

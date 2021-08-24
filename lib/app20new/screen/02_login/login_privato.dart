@@ -8,7 +8,7 @@ import '/app20new/controller/http_helper.dart';
 import '/app20new/data/dati_login_clienti.dart';
 import '/app20new/data/dati_utenza.dart';
 import '/app20new/data/db_helper.dart';
-import '../03_logged/fatture_screen.dart';
+import '../fatture_screen/fatture_screen.dart';
 import '/app20new/model/text_field.dart';
 
 class Privato extends StatefulWidget {
@@ -21,56 +21,54 @@ class Privato extends StatefulWidget {
 class _PrivatoState extends State<Privato> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: GestureDetector(
-        onTap: () => FocusScope.of(context)
-            .unfocus(), //quando clicchi sul nulla chiude la tastiera se è aperta
-        child: Scaffold(
-          body: Container(
-            //appbar
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
+    return GestureDetector(
+      onTap: () => FocusScope.of(context)
+          .unfocus(), //quando clicchi sul nulla chiude la tastiera se è aperta
+      child: Scaffold(
+        body: Container(
+          //appbar
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+              bluAircomm,
                 bluAircomm,
-                  bluAircomm,
-                ],
-              ),
-            ),
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(11.0),
-                  child: Container(
-                    height: MediaQuery.of(context).size.height / 4,
-                    child: Image.asset(
-                      'assets/icon/logo2.png',
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(24),
-                        topRight: Radius.circular(24),
-                      ),
-                      color: Colors.grey[100],
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        TextAccess(
-                          text: 'Accedi',
-                        ),
-                        Expanded(
-                          child: LoginPrivato(), //body
-                        ),
-                      ],
-                    ),
-                  ),
-                )
               ],
             ),
+          ),
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(11.0),
+                child: Container(
+                  height: MediaQuery.of(context).size.height / 4,
+                  child: Image.asset(
+                    'assets/icon/logo2.png',
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(24),
+                      topRight: Radius.circular(24),
+                    ),
+                    color: Colors.grey[100],
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      TextAccess(
+                        text: 'Accedi',
+                      ),
+                      Expanded(
+                        child: LoginPrivato(), //body
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
           ),
         ),
       ),

@@ -8,7 +8,7 @@ import '/app20new/controller/http_helper.dart';
 import '/app20new/data/dati_login_aziende.dart';
 import '/app20new/data/dati_utenza.dart';
 import '/app20new/data/db_helper.dart';
-import '../03_logged/fatture_screen.dart';
+import '../fatture_screen/fatture_screen.dart';
 import '/app20new/model/text_field.dart';
 
 class Aziendale extends StatefulWidget {
