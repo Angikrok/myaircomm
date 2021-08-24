@@ -152,8 +152,7 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-  Expanded privateBusinessSelection(
-      double space, BuildContext context, Animation<double> animation) {
+  Expanded privateBusinessSelection(double space, BuildContext context, Animation<double> animation) {
     return Expanded(
       flex: 1,
       child: Row(
@@ -177,8 +176,7 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-  Expanded tastoAziendale(
-      Animation<double> animation, double space, BuildContext context) {
+  Expanded tastoAziendale(Animation<double> animation, double space, BuildContext context) {
     return Expanded(
       flex: 2,
       child: Column(
@@ -234,8 +232,7 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-  Expanded tastoPrivato(
-      Animation<double> animation, BuildContext context, double space) {
+  Expanded tastoPrivato(Animation<double> animation, BuildContext context, double space) {
     return Expanded(
       flex: 2,
       child: Column(

@@ -4,11 +4,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:my_aircomm/app20new/model/alerts.dart';
 import 'package:my_aircomm/app20new/model/costanti.dart';
+import 'package:my_aircomm/app20new/screen/03_logged/fatture_screen/fatture_screen.dart';
 import '/app20new/controller/http_helper.dart';
 import '/app20new/data/dati_login_aziende.dart';
 import '/app20new/data/dati_utenza.dart';
 import '/app20new/data/db_helper.dart';
-import '../fatture_screen/fatture_screen.dart';
 import '/app20new/model/text_field.dart';
 
 class Aziendale extends StatefulWidget {

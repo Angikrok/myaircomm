@@ -10,9 +10,9 @@ import 'package:my_aircomm/app20new/data/dati_utenza.dart';
 import 'package:my_aircomm/app20new/data/invoice.dart';
 import 'package:my_aircomm/app20new/model/costanti.dart';
 import 'package:my_aircomm/app20new/screen/03_logged/bill_pdf.dart';
-import 'package:my_aircomm/app20new/screen/fatture_screen/fatture_screen.dart';
-import 'package:my_aircomm/main.dart';
 import 'package:page_transition/page_transition.dart';
+
+import 'fatture_screen.dart';
 
 class StileFattura extends StatefulWidget {
   StileFattura(
@@ -224,9 +224,7 @@ class _StileFatturaState extends State<StileFattura> {
         ));
   }
 
-  Expanded arancioniBassi(
-    BuildContext context,
-  ) {
+  Expanded arancioniBassi(BuildContext context) {
     return Expanded(
       flex: 1,
       child: Stack(
@@ -309,7 +307,7 @@ class _StileFatturaState extends State<StileFattura> {
                 useCode128B: false,
                 useCode128C: false,
               ),
-              data: '31254624',
+              data: widget.datiUtenza.not_payed_invoice[0].barCode,
               width: MediaQuery.of(context).size.height,
               height: 80,
             ),

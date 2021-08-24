@@ -6,12 +6,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:my_aircomm/app20new/model/alerts.dart';
-
-import 'package:my_aircomm/app20new/screen/fatture_screen/elenco_fatture.dart';
-
+import 'package:my_aircomm/app20new/screen/03_logged/fatture_screen/elenco_fatture.dart';
 import 'package:page_transition/page_transition.dart';
-import '../03_logged/bill_pdf.dart';
-
+import '../bill_pdf.dart';
 import '/app20new/controller/http_helper.dart';
 import '/app20new/data/dati_utenza.dart';
 
