@@ -142,7 +142,7 @@ class _LoginAziendaState extends State<LoginAzienda> {
                   keyboardType: TextInputType.number,
                   controller: txtCC,
                   decoration: InputDecoration(
-                    hintText: 'Codice Cliente',
+                    labelText: 'Codice Cliente',
                     errorText: validate_cc ? 'Campo Obbligatorio' : null,
                     suffixIcon: Icon(Icons.accessibility_sharp),
                     border: OutlineInputBorder(
@@ -181,7 +181,7 @@ class _LoginAziendaState extends State<LoginAzienda> {
                     keyboardType: TextInputType.number,
                     controller: txtCF,
                     decoration: InputDecoration(
-                      hintText: 'Partita IVA',
+                      labelText: 'Partita IVA',
                       errorText: validate_cf ? 'Campo Obbligatorio' : null,
                       suffixIcon: GestureDetector(
                         onTap: () {},

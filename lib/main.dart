@@ -3,12 +3,12 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:my_aircomm/app20new/screen/01_loadingscreen/elementi_loading_screen/home_screen.dart';
 import 'package:screen_brightness/screen_brightness.dart';
 
 // metodo main
 void main() {
-  
   runApp(MyApp());
 }
 
@@ -19,13 +19,13 @@ class MyApp extends StatelessWidget {
     setBrightness(1);
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return MaterialApp(
-      
       debugShowCheckedModeBanner: false,
       title: 'My Aircomm',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home: HomeScreen(),
+      
     );
   }
 }

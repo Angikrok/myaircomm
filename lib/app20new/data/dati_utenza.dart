@@ -63,10 +63,9 @@ class DatiUtenza {
       prossimaBolletta = 'errore';
     }
 
-    List<Invoice> not_payed_invoice =
-        (parsedJson['user_invoice_not_payed'])
-            .map<Invoice>((b) => Invoice.fromJson(b))
-            .toList();
+    List<Invoice> not_payed_invoice = (parsedJson['user_invoice_not_payed'])
+        .map<Invoice>((b) => Invoice.fromJson(b))
+        .toList();
 
     return DatiUtenza(
       id: id,
