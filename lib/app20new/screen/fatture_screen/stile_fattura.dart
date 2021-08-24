@@ -1,6 +1,10 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:math';
+
+import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:my_aircomm/app20new/controller/http_helper.dart';
 import 'package:my_aircomm/app20new/data/dati_utenza.dart';
 import 'package:my_aircomm/app20new/data/invoice.dart';
@@ -247,14 +251,15 @@ class _StileFatturaState extends State<StileFattura> {
             right: -5,
             top: 45,
             child: ElevatedButton(
-              child: Icon(
-                Icons.bar_chart_sharp,
-                color: kWhite,
+              child: SvgPicture.asset(
+                'assets/icon/barcode.svg',
+                height: 35,
               ),
               style: ElevatedButton.styleFrom(
                   primary: Colors.transparent, elevation: 0),
               onPressed: () {
-                showModalBottomSheet(
+                showBottomSheet(
+                  elevation: 2,
                   context: context,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
@@ -263,12 +268,35 @@ class _StileFatturaState extends State<StileFattura> {
                     ),
                   ),
                   builder: (context) => Container(
-                    height: 500,
+                    height: MediaQuery.of(context).size.height - 115,
                     child: Column(
                       children: [
-                        SizedBox(
-                          child: Icon(Icons.read_more),
+                        Container(
+                          margin: EdgeInsets.all(24),
+                          width: MediaQuery.of(context).size.width - 200,
+                          height: 5,
+                          decoration: BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(24))),
                         ),
+                        Text('Scannerizza il BARCODE'),
+                        Spacer(),
+                        Transform.rotate(
+                          angle: 90 * pi / 180,
+                          child: BarcodeWidget(
+                            drawText: false,
+                            barcode: Barcode.code128(
+                              useCode128A: true,
+                              useCode128B: false,
+                              useCode128C: false,
+                            ),
+                            data: '31254624',
+                            width: MediaQuery.of(context).size.height,
+                            height: 80,
+                          ),
+                        ),
+                        Spacer()
                       ],
                     ),
                   ),
