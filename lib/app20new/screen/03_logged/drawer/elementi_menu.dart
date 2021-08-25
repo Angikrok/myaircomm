@@ -150,6 +150,7 @@ class _ElementiMenuState extends State<ElementiMenu> {
           context,
           PageTransition(
               child: FattureScreen(
+             
                 datiUtenza: widget.datiUtenza,
               ),
               type: PageTransitionType.fade),

@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen>
   late final Animation<double> lineaArancione;
   late final Animation<double> headerScreen;
   late final Animation<double> lineaBlu;
-  String textMessage = "";
+  String textMessage = "Seleziona Profilo:";
   bool isError = false;
   bool internet = false;
 
@@ -128,10 +128,17 @@ class _HomeScreenState extends State<HomeScreen>
                   const Divider(
                     color: Colors.transparent,
                   ),
-                  privateBusinessSelection(
-                      space, context, _formElementAnimation),
+                  if (textMessage == 'Nessuna connessione ad internet')
+                    Container()
+                  else if (textMessage == 'Servizio Offline' ||
+                      textMessage == 'Server Offline')
+                    bottoneRiprova(context)
+                  else
+                    textMessage == 'Verifica Server...'
+                        ? Container()
+                        : privateBusinessSelection(
+                            space, context, _formElementAnimation),
                   Spacer(),
-                  Text(isError == true ? '' : textMessage)
                 ],
               ),
             ),
@@ -141,18 +148,49 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
+  Container bottoneRiprova(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width - 100,
+      margin: EdgeInsets.all(12),
+      height: 50,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            bluAircomm,
+            bluAircomm,
+          ],
+        ),
+        borderRadius: BorderRadius.all(
+          Radius.circular(24),
+        ),
+      ),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            minimumSize: Size(double.infinity, double.infinity),
+            primary: Colors.transparent,
+            elevation: 0),
+        child: Text('Riprova'),
+        onPressed: () {
+          statusChecker2();
+          setState(() {});
+        },
+      ),
+    );
+  }
+
   FadeSlideTransition textAnimato(Animation<double> animation) {
     return FadeSlideTransition(
       additionalOffset: 0.0,
       animation: animation,
-      child: const Text(
-        'Seleziona profilo:',
+      child: Text(
+        textMessage,
         style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
       ),
     );
   }
 
-  Expanded privateBusinessSelection(double space, BuildContext context, Animation<double> animation) {
+  Expanded privateBusinessSelection(
+      double space, BuildContext context, Animation<double> animation) {
     return Expanded(
       flex: 1,
       child: Row(
@@ -176,9 +214,10 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-  Expanded tastoAziendale(Animation<double> animation, double space, BuildContext context) {
+  Expanded tastoAziendale(
+      Animation<double> animation, double space, BuildContext context) {
     return Expanded(
-      flex: 2,
+      flex: 3,
       child: Column(
         children: [
           SizedBox(
@@ -216,7 +255,7 @@ class _HomeScreenState extends State<HomeScreen>
             animation: animation,
             additionalOffset: space,
             child: const Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(2.0),
               child: Text(
                 'Aziendale',
                 style: TextStyle(
@@ -232,7 +271,8 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-  Expanded tastoPrivato(Animation<double> animation, BuildContext context, double space) {
+  Expanded tastoPrivato(
+      Animation<double> animation, BuildContext context, double space) {
     return Expanded(
       flex: 2,
       child: Column(
@@ -275,7 +315,7 @@ class _HomeScreenState extends State<HomeScreen>
             animation: animation,
             additionalOffset: space,
             child: const Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(2.0),
               child: Text(
                 'Privato',
                 style: TextStyle(
@@ -346,14 +386,14 @@ class _HomeScreenState extends State<HomeScreen>
       setState(() {
         internet = false;
 
-        textMessage = 'verifica connettività';
+        textMessage = 'Verifica Connettività...';
       });
       //se è connesso procedi ai test successivi se no torna errore
       if (hasInternet) {
         print('cellulare online: passo alla fase successiva');
         internet = false;
         setState(() {
-          textMessage = 'verifica server';
+          textMessage = 'Verifica Server...';
         });
         statusChecker2();
       } else {
@@ -372,14 +412,14 @@ class _HomeScreenState extends State<HomeScreen>
         print('server online: passo alla fase successiva');
         isError = false;
         setState(() {
-          textMessage = 'verifica servizi';
+          textMessage = 'Verifica Servizi...';
         });
         helper.serviceStatus().then((value) {
           if (value) {
             print('servizio online: passo alla fase successiva');
             isError = false;
             setState(() {
-              textMessage = '';
+              textMessage = 'Seleziona Profilo:';
             });
           } else {
             print('servizio offline mostro errore');

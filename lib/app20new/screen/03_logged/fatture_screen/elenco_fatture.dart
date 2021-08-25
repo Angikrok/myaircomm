@@ -16,6 +16,7 @@ class ElencoFatture extends StatelessWidget {
     required this.url,
     required this.title,
     required this.selectYear,
+   
   }) : super(key: key);
 
   Widget selectYear;
@@ -116,6 +117,7 @@ class ElencoFatture extends StatelessWidget {
                   ),
                 ),
                 FattureNonPagate(
+                
                   title: title,
                   datiInvoice: datiInvoice,
                   datiUtenza: datiUtenza,

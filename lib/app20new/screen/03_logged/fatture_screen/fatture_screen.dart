@@ -5,7 +5,9 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:my_aircomm/app20new/model/alerts.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:my_aircomm/app20new/model/costanti.dart';
 import 'package:my_aircomm/app20new/screen/03_logged/fatture_screen/elenco_fatture.dart';
 import 'package:page_transition/page_transition.dart';
 import '../bill_pdf.dart';
@@ -15,6 +17,7 @@ import '/app20new/data/dati_utenza.dart';
 class FattureScreen extends StatefulWidget {
   FattureScreen({
     required this.datiUtenza,
+    
     Key? key,
   }) : super(key: key);
   DatiUtenza datiUtenza;
@@ -37,9 +40,7 @@ class _FattureScreenState extends State<FattureScreen> {
     return SafeArea(
       child: Scaffold(
         body: WillPopScope(
-          onWillPop: () {
-            return onWillPop(backButtonPressedTime);
-          },
+          onWillPop: onWillPop,
           child: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -50,10 +51,11 @@ class _FattureScreenState extends State<FattureScreen> {
               ),
             ),
             child: ElencoFatture(
+              
               selectYear: Container(),
               datiUtenza: widget.datiUtenza,
               title: 'Fatture da pagare',
-              datiInvoice: widget.datiUtenza.not_payed_invoice,
+              datiInvoice: widget.datiUtenza.invoice,
               helper: helper,
               url: url,
             ),
@@ -61,6 +63,23 @@ class _FattureScreenState extends State<FattureScreen> {
         ),
       ),
     );
+  }
+
+  Future<bool> onWillPop() async {
+    DateTime currentTime = DateTime.now();
+    bool backButton;
+    backButton = backButtonPressedTime == null ||
+        currentTime.difference(backButtonPressedTime!) > Duration(seconds: 2);
+    if (backButton) {
+      backButtonPressedTime = currentTime;
+      Fluttertoast.showToast(
+          msg: "Clicca di nuovo per chiudere l'app",
+          backgroundColor: arancioneAircomm,
+          textColor: Colors.white);
+      return false;
+    }
+    SystemNavigator.pop();
+    return true;
   }
 }
 

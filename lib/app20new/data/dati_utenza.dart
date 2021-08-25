@@ -6,7 +6,7 @@ class DatiUtenza {
   final String tipo;
   final String ultimoMese;
   final String prossimaBolletta;
-  List<Invoice> not_payed_invoice;
+  List<Invoice> invoice;
 
   DatiUtenza({
     required this.id,
@@ -14,7 +14,7 @@ class DatiUtenza {
     required this.tipo,
     required this.ultimoMese,
     required this.prossimaBolletta,
-    required this.not_payed_invoice,
+    required this.invoice,
   });
 
   factory DatiUtenza.fromJson(Map<String, dynamic> parsedJson) {
@@ -63,7 +63,7 @@ class DatiUtenza {
       prossimaBolletta = 'errore';
     }
 
-    List<Invoice> not_payed_invoice = (parsedJson['user_invoice_not_payed'])
+    List<Invoice> invoice = (parsedJson['user_invoice_not_payed'])
         .map<Invoice>((b) => Invoice.fromJson(b))
         .toList();
 
@@ -73,7 +73,7 @@ class DatiUtenza {
       tipo: tipo,
       ultimoMese: ultimoMese,
       prossimaBolletta: prossimaBolletta,
-      not_payed_invoice: not_payed_invoice,
+      invoice: invoice,
     );
   }
 }

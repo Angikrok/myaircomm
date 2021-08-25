@@ -100,6 +100,7 @@ class _LoginAziendaState extends State<LoginAzienda> {
   final DbHelper dbHelper = DbHelper();
   DatiLoginAziende datiLoginAziende = DatiLoginAziende(cc: '', cf: '');
   bool ricordami = false;
+  bool isLoading = false;
   @override
   void initState() {
     super.initState();
@@ -298,11 +299,13 @@ class _LoginAziendaState extends State<LoginAzienda> {
                     fontSize: 13.0);
               }).then((a) {
                 setState(() {
+                  isLoading = true;
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => FattureScreen(
                         datiUtenza: a,
+                       
                       ),
                     ),
                   );

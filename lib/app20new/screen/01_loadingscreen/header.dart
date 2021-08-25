@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_aircomm/app20new/model/costanti.dart';
-import 'logo.dart';
 
 class Header extends StatelessWidget {
   final Animation<double> animation;
@@ -13,11 +11,15 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: const <Widget>[
-        Logo(
-          color: kBlue,
-          size: 50.0,
+      children: <Widget>[
+        SizedBox(
+          height: 100,
+          width: 280,
+          child: Image.asset(
+            'assets/icon/logo2.png',
+          ),
         ),
+
         // SizedBox(height: kSpaceM),
         // FadeSlideTransition(
         //   animation: animation,

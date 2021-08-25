@@ -34,7 +34,6 @@ dependencies:
   page_transition: "^2.0.2"
   flutter_svg: ^0.22.0
   cupertino_icons: ^1.0.2
-  splash_screen_view: ^3.0.0
   cool_alert: ^1.1.0
   line_icons: ^2.0.1
   internet_connection_checker: ^0.0.1+2
@@ -45,10 +44,9 @@ dependencies:
   share_plus: "^2.1.4"
   advance_pdf_viewer: "^2.0.0"
   flutter_launcher_icons: ^0.9.0
-  animated_text_kit: ^4.2.1
-  barcode: ^2.1.0
   barcode_widget: ^2.0.1
   screen_brightness: ^0.0.4
+  shimmer: ^2.0.0
    
 
 

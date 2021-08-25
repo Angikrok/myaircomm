@@ -3,6 +3,7 @@
 import 'dart:math';
 
 import 'package:barcode_widget/barcode_widget.dart';
+import 'package:custom_check_box/custom_check_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:my_aircomm/app20new/controller/http_helper.dart';
@@ -11,25 +12,27 @@ import 'package:my_aircomm/app20new/data/invoice.dart';
 import 'package:my_aircomm/app20new/model/costanti.dart';
 import 'package:my_aircomm/app20new/screen/03_logged/bill_pdf.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:shimmer/shimmer.dart';
 
 import 'fatture_screen.dart';
 
 class StileFattura extends StatefulWidget {
-  StileFattura(
-      {Key? key,
-      required this.datiUtenza,
-      required this.datiInvoice,
-      required this.helper,
-      required this.url,
-      required this.title,
-      required this.animationController,
-      required this.animation})
-      : super(key: key);
+  StileFattura({
+    Key? key,
+    required this.datiUtenza,
+    required this.datiInvoice,
+    required this.helper,
+    required this.url,
+    required this.title,
+    required this.animationController,
+    required this.animation,
+  }) : super(key: key);
   final DatiUtenza datiUtenza;
   final List<Invoice> datiInvoice;
   final HttpHelper helper;
   final String url;
   final String title;
+
   AnimationController animationController;
   Animation<double> animation;
 
@@ -40,10 +43,7 @@ class StileFattura extends StatefulWidget {
 class _StileFatturaState extends State<StileFattura> {
   @override
   Widget build(BuildContext context) {
-    Theme.of(context).backgroundColor;
     double width = MediaQuery.of(context).size.width;
-    print(width.toStringAsFixed(20));
-    // double height = MediaQuery.of(context).size.height;
     return AnimatedBuilder(
       animation: widget.animationController,
       builder: (context, _) {
@@ -101,7 +101,7 @@ class _StileFatturaState extends State<StileFattura> {
                                       children: [
                                         logo_Data(index),
                                         colonnaInfoFattura(context, index),
-                                        arancioniBassi(context),
+                                        arancioniBassi(context, index),
                                       ],
                                     ),
                                   ),
@@ -224,7 +224,7 @@ class _StileFatturaState extends State<StileFattura> {
         ));
   }
 
-  Expanded arancioniBassi(BuildContext context) {
+  Expanded arancioniBassi(BuildContext context, int index) {
     return Expanded(
       flex: 1,
       child: Stack(
@@ -258,7 +258,6 @@ class _StileFatturaState extends State<StileFattura> {
                   primary: Colors.transparent, elevation: 0),
               onPressed: () {
                 showBottomSheet(
-                  elevation: 2,
                   context: context,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
@@ -266,7 +265,7 @@ class _StileFatturaState extends State<StileFattura> {
                       topLeft: Radius.circular(50),
                     ),
                   ),
-                  builder: (context) => barCodeBottomSheet(context),
+                  builder: (context) => barCodeBottomSheet(context, index),
                 );
               },
             ),
@@ -276,9 +275,11 @@ class _StileFatturaState extends State<StileFattura> {
     );
   }
 
-  Container barCodeBottomSheet(BuildContext context) {
+  Widget barCodeBottomSheet(BuildContext context, int index) {
+    bool value = true;
     return Container(
       height: MediaQuery.of(context).size.height - 115,
+      width: MediaQuery.of(context).size.width,
       child: Column(
         children: [
           Container(
@@ -297,18 +298,22 @@ class _StileFatturaState extends State<StileFattura> {
               style: TextStyle(fontSize: 16, fontFamily: 'Coco'),
             ),
           ),
+         
           Spacer(),
           Transform.rotate(
             angle: 90 * pi / 180,
             child: BarcodeWidget(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(32))),
               drawText: false,
+              margin: EdgeInsets.all(24),
               barcode: Barcode.code128(
                 useCode128A: true,
                 useCode128B: false,
                 useCode128C: false,
               ),
-              data: widget.datiUtenza.not_payed_invoice[0].barCode,
-              width: MediaQuery.of(context).size.height,
+              data: widget.datiInvoice[index].barCode.toString(),
+              width: MediaQuery.of(context).size.height / 1.5,
               height: 80,
             ),
           ),
@@ -317,4 +322,102 @@ class _StileFatturaState extends State<StileFattura> {
       ),
     );
   }
+}
+
+Widget loadingShimmer(BuildContext context) {
+  return Column(
+    children: [
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Shimmer.fromColors(
+          baseColor: Colors.grey,
+          highlightColor: Colors.grey[200]!,
+          child: Column(
+            children: [
+              Row(),
+              Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(32),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        offset: Offset(-5, 6),
+                        blurRadius: 5,
+                        color: Colors.black.withOpacity(.3),
+                      ),
+                    ],
+                  ),
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: CircleAvatar(),
+                          ),
+                          SizedBox(
+                            width: 25,
+                          ),
+                          Container(
+                            width: 250,
+                            child: Container(
+                              width: 250,
+                              height: 10,
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(24)),
+                                  color: Colors.grey),
+                            ),
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 12,
+                          ),
+                          Container(
+                            height: 10,
+                            child: Container(
+                              width: 40,
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(24)),
+                                  color: Colors.grey),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 35,
+                          ),
+                          Container(
+                            width: 250,
+                            child: Container(
+                              width: 250,
+                              height: 10,
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(24)),
+                                  color: Colors.grey),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                          )
+                        ],
+                      ),
+                      ClipRRect(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(38),
+                        ),
+                      ),
+                    ],
+                  )),
+            ],
+          ),
+        ),
+      ),
+    ],
+  );
 }

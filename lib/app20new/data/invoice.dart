@@ -1,3 +1,5 @@
+import 'package:barcode_widget/barcode_widget.dart';
+
 class Invoice {
   final String id_fattura;
   final String tot;
@@ -14,7 +16,7 @@ class Invoice {
     String id_fattura;
     String tot;
     String data;
-    String barCode;
+    String barCodeT;
     try {
       id_fattura = (invoice['ID_FATTURA'] == null)
           ? 'nulla'
@@ -36,13 +38,17 @@ class Invoice {
       data = 'errore';
     }
     try {
-      barCode = (invoice['BARCODE'] == null)
+      barCodeT = (invoice['BARCODE'] == null)
           ? 'nulla'
           : invoice['BARCODE'].toString();
     } catch (error) {
-      barCode = 'errore';
+      barCodeT = 'errore';
     }
-
-    return Invoice(id_fattura: id_fattura, tot: tot, data: data, barCode: barCode);
+    return Invoice(
+      id_fattura: id_fattura,
+      tot: tot,
+      data: data,
+      barCode: barCodeT,
+    );
   }
 }

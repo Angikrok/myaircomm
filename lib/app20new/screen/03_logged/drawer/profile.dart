@@ -1,8 +1,10 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:my_aircomm/app20new/data/dati_utenza.dart';
-import 'package:my_aircomm/app20new/model/alerts.dart';
+import 'package:my_aircomm/app20new/model/costanti.dart';
 import '/app20new/controller/http_helper.dart';
 import 'elementi_menu.dart';
 
@@ -20,15 +22,30 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
+  Future<bool> onWillPop() async {
+    DateTime currentTime = DateTime.now();
+    bool backButton;
+    backButton = backButtonPressedTime == null ||
+        currentTime.difference(backButtonPressedTime!) > Duration(seconds: 2);
+    if (backButton) {
+      backButtonPressedTime = currentTime;
+      Fluttertoast.showToast(
+          msg: "Clicca di nuovo per chiudere l'app",
+          backgroundColor: arancioneAircomm,
+          textColor: Colors.white);
+      return false;
+    }
+    SystemNavigator.pop();
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return SafeArea(
       child: WillPopScope(
-        onWillPop: () {
-          return onWillPop(backButtonPressedTime);
-        },
+        onWillPop: onWillPop,
         child: Scaffold(
           key: _globalKey,
           drawer: ElementiMenu(
