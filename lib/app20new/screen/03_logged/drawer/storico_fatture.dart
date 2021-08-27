@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:lottie/lottie.dart';
 import 'package:my_aircomm/app20new/data/dati_utenza.dart';
 import 'package:my_aircomm/app20new/model/costanti.dart';
 import 'package:my_aircomm/app20new/screen/03_logged/fatture_screen/elenco_fatture.dart';
@@ -49,29 +48,27 @@ class _StoricoFattureState extends State<StoricoFatture> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: WillPopScope(
-          onWillPop: onWillPop,
-          child: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color(0xFF0096c7),
-                  Color(0xFF023e8a),
-                ],
-              ),
+    return Scaffold(
+      body: WillPopScope(
+        onWillPop: onWillPop,
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xFF0096c7),
+                Color(0xFF023e8a),
+              ],
             ),
-            child: ElencoFatture(
-              isLoading: isLoading,
-              cC: widget.cC,
-              selectYear: selectYear(context),
-              datiUtenza: widget.datiUtenza,
-              datiInvoice: datiInvoice,
-              title: titlePayed,
-              helper: helper,
-              url: 'http://core.aircommservizi.it/admin/a/pdf.php?id=',
-            ),
+          ),
+          child: ElencoFatture(
+            isLoading: isLoading,
+            cC: widget.cC,
+            selectYear: selectYear(context),
+            datiUtenza: widget.datiUtenza,
+            datiInvoice: datiInvoice,
+            title: titlePayed,
+            helper: helper,
+            url: 'http://core.aircommservizi.it/admin/a/pdf.php?id=',
           ),
         ),
       ),

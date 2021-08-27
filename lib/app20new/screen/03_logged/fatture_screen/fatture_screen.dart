@@ -21,8 +21,8 @@ class FattureScreen extends StatefulWidget {
   }) : super(key: key);
   DatiUtenza datiUtenza;
 
-final String cc;
-final bool isLoading;
+  final String cc;
+  final bool isLoading;
 
   @override
   State<FattureScreen> createState() => _FattureScreenState();
@@ -39,29 +39,20 @@ class _FattureScreenState extends State<FattureScreen> {
   DateTime? backButtonPressedTime;
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: WillPopScope(
-          onWillPop: onWillPop,
-          child: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color(0xFF0096c7),
-                  Color(0xFF023e8a),
-                ],
-              ),
-            ),
-            child: ElencoFatture(
-              isLoading: widget.isLoading,
-              cC: widget.cc,
-              selectYear: Container(),
-              datiUtenza: widget.datiUtenza,
-              title: titleNotPayed,
-              datiInvoice: widget.datiUtenza.invoice,
-              helper: helper,
-              url: url,
-            ),
+    return Scaffold(
+      body: WillPopScope(
+        onWillPop: onWillPop,
+        child: Container(
+          decoration: BoxDecoration(),
+          child: ElencoFatture(
+            isLoading: widget.isLoading,
+            cC: widget.cc,
+            selectYear: Container(),
+            datiUtenza: widget.datiUtenza,
+            title: titleNotPayed,
+            datiInvoice: widget.datiUtenza.invoice,
+            helper: helper,
+            url: url,
           ),
         ),
       ),

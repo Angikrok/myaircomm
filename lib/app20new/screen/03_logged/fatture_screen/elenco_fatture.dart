@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:my_aircomm/app20new/controller/http_helper.dart';
 import 'package:my_aircomm/app20new/data/dati_utenza.dart';
 import 'package:my_aircomm/app20new/data/invoice.dart';
+import 'package:my_aircomm/app20new/model/costanti.dart';
 import 'package:my_aircomm/app20new/screen/03_logged/drawer/elementi_menu.dart';
 import 'fatture_non_pagate.dart';
 
@@ -44,13 +45,8 @@ class ElencoFatture extends StatelessWidget {
       ),
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color(0xFF40b6c7),
-              Color(0xFF023e8a),
-            ],
-          ),
-        ),
+            color:
+                isLoading == false ? Colors.black.withOpacity(.4) : bluAircomm),
         child: Stack(
           children: [
             Positioned(
@@ -58,7 +54,9 @@ class ElencoFatture extends StatelessWidget {
               right: -120,
               child: CircleAvatar(
                 radius: 120,
-                backgroundColor: Color(0xFF023e8a),
+                backgroundColor: isLoading == false
+                    ? Color(0xFF023e8a).withOpacity(.4)
+                    : Color(0xFF023e8a),
               ),
             ),
             Positioned(
@@ -66,7 +64,9 @@ class ElencoFatture extends StatelessWidget {
               left: -150,
               child: CircleAvatar(
                 radius: 135,
-                backgroundColor: Color(0xFF40b6c7),
+                backgroundColor: isLoading == false
+                    ? Color(0xFF40b6c7).withOpacity(.4)
+                    : Color(0xFF40b6c7),
               ),
             ),
             Positioned(
@@ -74,7 +74,9 @@ class ElencoFatture extends StatelessWidget {
               right: -115,
               child: CircleAvatar(
                 radius: 120,
-                backgroundColor: Color(0xFF0096c7),
+                backgroundColor: isLoading == false
+                    ? Color(0xFF0096c7).withOpacity(.4)
+                    : Color(0xFF0096c7),
               ),
             ),
             Positioned(

@@ -1,6 +1,8 @@
 import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:my_aircomm/app20new/model/costanti.dart';
 import 'package:share_plus/share_plus.dart';
 
 class PdfView extends StatefulWidget {
@@ -34,61 +36,72 @@ class _PdfViewState extends State<PdfView> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: PreferredSize(
-            child: Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(24),
-                      bottomLeft: Radius.circular(24)),
-                  gradient: LinearGradient(
-                      colors: [Color(0xFF00b4d8), Colors.blue[900]!])),
-              child: AppBar(
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(
-                  bottom: Radius.circular(30),
-                )),
-                backgroundColor: Colors.transparent,
-                title: Text('ID Fattura: ' + widget.id),
-                centerTitle: true,
+    return Scaffold(
+      backgroundColor: Colors.grey[150],
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.keyboard_return_rounded),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        elevation: 2,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+          bottom: Radius.circular(30),
+        )),
+        backgroundColor: bluAircomm,
+        title: Text('ID Fattura: ' + widget.id),
+        centerTitle: true,
+      ),
+      body: _isLoading
+          ? Center(
+              child: Lottie.network(
+                'https://assets8.lottiefiles.com/private_files/lf30_63CXnL.json',
               ),
-            ),
-            preferredSize: Size(MediaQuery.of(context).size.width, 50)),
-        body: _isLoading
-            ? Center(child: CircularProgressIndicator())
-            : SafeArea(
+            )
+          : SafeArea(
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(
+                      24,
+                    ),
+                  ),
+                  color: bluAircomm,
+                ),
                 child: PDFViewer(
-                  progressIndicator: CircularProgressIndicator.adaptive(),
+                  progressIndicator: Lottie.network(
+                    'https://assets8.lottiefiles.com/private_files/lf30_63CXnL.json',
+                  ),
                   indicatorText: Colors.white,
                   showPicker: false,
                   showNavigation: true,
+                  indicatorPosition: IndicatorPosition.topRight,
                   scrollDirection: Axis.horizontal,
                   document: document!,
                   zoomSteps: 1,
                 ),
               ),
-        floatingActionButton: FloatingActionButton(
-          elevation: 0,
-          onPressed: () {
-            share(context, document.toString());
-
-            setState(() {});
-          },
-          child: Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Color(0xFF00b4d8),
-                    Colors.blue,
-                  ],
-                ),
-                borderRadius: BorderRadius.all(Radius.circular(32))),
-            child: Icon(
-              Icons.share,
             ),
+      floatingActionButton: FloatingActionButton(
+        elevation: 0,
+        onPressed: () {
+          share(context, document.toString());
+
+          setState(() {});
+        },
+        child: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color(0xFF00b4d8),
+                  Colors.blue,
+                ],
+              ),
+              borderRadius: BorderRadius.all(Radius.circular(32))),
+          child: Icon(
+            Icons.share,
           ),
         ),
       ),

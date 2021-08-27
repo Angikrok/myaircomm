@@ -1,4 +1,3 @@
-import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:my_aircomm/app20new/data/dati_utenza.dart';
@@ -43,16 +42,16 @@ class _ElementiMenuState extends State<ElementiMenu> {
       child: Stack(
         children: [
           Positioned(
-            top: -widget.height / 6,
-            right: MediaQuery.of(context).size.width / 2,
+            top: -135,
+            left: -135,
             child: CircleAvatar(
               radius: 135,
               backgroundColor: Color(0xFF40b6c7),
             ),
           ),
           Positioned(
-            top: widget.height / 1.3,
-            left: MediaQuery.of(context).size.width / 2.2,
+            bottom: -80,
+            right: -50,
             child: CircleAvatar(
               radius: 140,
               backgroundColor: Color(0xFF023e8a),
@@ -72,8 +71,8 @@ class _ElementiMenuState extends State<ElementiMenu> {
             ),
           ),
           Positioned(
-            top: widget.height / 1.3,
-            left: MediaQuery.of(context).size.width / 2,
+            bottom: -135,
+            right: -80,
             child: Transform.rotate(
               angle: -20,
               child: CircleAvatar(
@@ -89,7 +88,6 @@ class _ElementiMenuState extends State<ElementiMenu> {
               Stack(
                 children: [
                   immagine(),
-                  // tastoAggiungiFoto(context),
                 ],
               ),
               SizedBox(
@@ -99,8 +97,7 @@ class _ElementiMenuState extends State<ElementiMenu> {
               Text(
                 dati.nome,
                 textAlign: TextAlign.center,
-                style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
+                style: TextStyle(color: Colors.black, fontFamily: 'Coco'),
               ),
               Divider(),
               tastsoFattureNonPagate(context, dati),
@@ -124,7 +121,7 @@ class _ElementiMenuState extends State<ElementiMenu> {
         shape: BoxShape.circle,
         boxShadow: <BoxShadow>[
           BoxShadow(
-              color: Colors.white.withOpacity(0.5),
+              color: Colors.white.withOpacity(0.1),
               offset: const Offset(2.0, 4.0),
               blurRadius: 8),
         ],
@@ -264,7 +261,6 @@ class _ElementiMenuState extends State<ElementiMenu> {
                     Navigator.pop(context);
                   },
                 ),
-                Spacer(),
                 TextButton(
                   child: new Text('Seleziona'),
                   onPressed: () {

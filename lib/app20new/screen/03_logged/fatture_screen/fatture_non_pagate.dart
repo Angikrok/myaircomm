@@ -79,23 +79,20 @@ class _FattureNonPagateState extends State<FattureNonPagate>
             cerchioGrandeDestra(context),
             cerchioPiccoloDestra(context),
             cerchioSinistra(context),
-            if (widget.datiInvoice.isEmpty)
-              nienteDaVederetxt()
-            else if (widget.isLoading == false)
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Center(
-                        child: Lottie.network(
+            if (widget.isLoading == false)
+              Container(
+                color: Colors.black.withOpacity(.3),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Lottie.network(
                       'https://assets8.lottiefiles.com/private_files/lf30_63CXnL.json',
-                      height: 195,
-                    )),
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               )
+            else if (widget.datiInvoice.isEmpty)
+              nienteDaVederetxt()
             else
               Column(
                 children: [
