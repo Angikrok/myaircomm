@@ -1,5 +1,3 @@
-import 'package:barcode_widget/barcode_widget.dart';
-
 class Invoice {
   final String id_fattura;
   final String tot;

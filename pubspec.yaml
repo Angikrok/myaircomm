@@ -42,11 +42,15 @@ dependencies:
   sqflite: ^2.0.0+3
   fluttertoast: ^8.0.7
   share_plus: "^2.1.4"
-  advance_pdf_viewer: "^2.0.0"
   flutter_launcher_icons: ^0.9.0
   barcode_widget: ^2.0.1
   screen_brightness: ^0.0.4
-  shimmer: ^2.0.0
+  qr_flutter: ^4.0.0
+  url_launcher: ^6.0.9
+  advance_pdf_viewer: "^2.0.0"
+  lottie: ^1.1.0
+  
+  
    
 
 

@@ -304,6 +304,8 @@ class _LoginAziendaState extends State<LoginAzienda> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => FattureScreen(
+                        isLoading: isLoading,
+                        cc: txtCC.text,
                         datiUtenza: a,
                        
                       ),

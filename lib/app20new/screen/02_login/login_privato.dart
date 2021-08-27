@@ -459,6 +459,8 @@ class _LoginPrivatoState extends State<LoginPrivato> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => FattureScreen(
+                      isLoading: true,
+                      cc: txtCC.text,
                       datiUtenza: datiUtenza,
                     ),
                   ),

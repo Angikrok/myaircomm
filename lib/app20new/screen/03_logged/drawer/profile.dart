@@ -13,9 +13,12 @@ class Profile extends StatefulWidget {
     Key? key,
     required this.datiUtenza,
     required this.datiCliente,
+    required this.cC,
+
   }) : super(key: key);
   DatiUtenza datiUtenza;
   final String datiCliente;
+  final String cC;
   @override
   _ProfileState createState() => _ProfileState();
 }
@@ -49,6 +52,7 @@ class _ProfileState extends State<Profile> {
         child: Scaffold(
           key: _globalKey,
           drawer: ElementiMenu(
+            cC: widget.cC,
             datiUtenza: widget.datiUtenza,
             width: width,
             height: height,

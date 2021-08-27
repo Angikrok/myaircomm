@@ -1,5 +1,8 @@
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:my_aircomm/app20new/data/dati_utenza.dart';
+import 'package:my_aircomm/app20new/model/costanti.dart';
 import 'package:my_aircomm/app20new/screen/01_loadingscreen/home_screen.dart';
 import 'package:my_aircomm/app20new/screen/03_logged/fatture_screen/fatture_screen.dart';
 import 'package:page_transition/page_transition.dart';
@@ -12,11 +15,13 @@ class ElementiMenu extends StatefulWidget {
     required this.width,
     required this.height,
     required this.datiUtenza,
+    required this.cC,
   }) : super(key: key);
 
   final double width;
   final double height;
   DatiUtenza datiUtenza;
+  final String cC;
 
   @override
   State<ElementiMenu> createState() => _ElementiMenuState();
@@ -34,7 +39,7 @@ class _ElementiMenuState extends State<ElementiMenu> {
             topLeft: Radius.circular(32),
             topRight: Radius.circular(32),
           ),
-          color: Colors.white.withOpacity(.905)),
+          color: Colors.white.withOpacity(1)),
       child: Stack(
         children: [
           Positioned(
@@ -140,7 +145,7 @@ class _ElementiMenuState extends State<ElementiMenu> {
         color: Color(0xFFfb8500),
       ),
       title: Text(
-        'Fatture da pagare',
+        titleNotPayed,
         style: TextStyle(
           color: Color(0xFFfb8500),
         ),
@@ -150,7 +155,8 @@ class _ElementiMenuState extends State<ElementiMenu> {
           context,
           PageTransition(
               child: FattureScreen(
-             
+                isLoading: true,
+                cc: widget.cC,
                 datiUtenza: widget.datiUtenza,
               ),
               type: PageTransitionType.fade),
@@ -160,6 +166,12 @@ class _ElementiMenuState extends State<ElementiMenu> {
   }
 
   ListTile tastoStorico(BuildContext context, DatiUtenza dati) {
+    List<String> list = [];
+
+    for (int i = DateTime.now().year; i >= DateTime.now().year - 2; i--) {
+      list.add(i.toString());
+    }
+    String value = '2021';
     return ListTile(
       trailing: Icon(
         Icons.payment,
@@ -172,16 +184,105 @@ class _ElementiMenuState extends State<ElementiMenu> {
         ),
       ),
       onTap: () {
-        Navigator.pushReplacement(
-          context,
-          PageTransition(
-            child: StoricoFatture(
-              datiUtenza: widget.datiUtenza,
-              cC: dati.id,
-              a: 'Anno',
-            ),
-            type: PageTransitionType.fade,
-          ),
+        showDialog(
+          context: context, barrierDismissible: false, // user must tap button!
+
+          builder: (BuildContext context) {
+            return AlertDialog(
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(32))),
+              title: Text(
+                'Seleziona anno',
+                style: TextStyle(fontFamily: 'Coco'),
+              ),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0, right: 16),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(20),
+                            ),
+                            color: Color(0xFF0096c7)),
+                        child: DropdownButton<String>(
+                          isExpanded: true,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(24),
+                          ),
+                          underline: Text(
+                            '',
+                          ),
+                          icon: Container(),
+                          value: value,
+                          style: TextStyle(color: Colors.white),
+                          dropdownColor: Color(0xFF0096c7).withOpacity(.92),
+                          elevation: 0,
+                          items: list.map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Center(
+                                child: Text(
+                                  value,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                          onChanged: (valore) {
+                            value = valore!;
+                            setState(() {});
+                            Navigator.pushReplacement(
+                                context,
+                                PageTransition(
+                                    child: StoricoFatture(
+                                      cC: widget.cC,
+                                      a: value,
+                                      datiUtenza: widget.datiUtenza,
+                                    ),
+                                    type: PageTransitionType.fade,
+                                    duration: Duration(milliseconds: 1)));
+                          },
+                        ),
+                      ),
+                    ),
+                    Center(
+                        child: Lottie.network(
+                            'https://assets2.lottiefiles.com/packages/lf20_xbf1be8x.json',
+                            height: 200))
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(
+                  child: Text('Annulla'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                Spacer(),
+                TextButton(
+                  child: new Text('Seleziona'),
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                        context,
+                        PageTransition(
+                            child: StoricoFatture(
+                              cC: widget.cC,
+                              a: value,
+                              datiUtenza: widget.datiUtenza,
+                            ),
+                            type: PageTransitionType.fade,
+                            duration: Duration(milliseconds: 1)));
+                  },
+                ),
+              ],
+            );
+          },
         );
       },
     );
@@ -201,48 +302,8 @@ class _ElementiMenuState extends State<ElementiMenu> {
         Navigator.pushReplacement(
             context,
             PageTransition(
-                child: HomeScreen(),
-                type: PageTransitionType.leftToRight));
+                child: HomeScreen(), type: PageTransitionType.leftToRight));
       },
     );
   }
 }
-//   Widget bottomSheet() {
-//     return Container(
-//       height: 100,
-//       width: MediaQuery.of(context).size.width,
-//       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-//       child: Column(
-//         mainAxisAlignment: MainAxisAlignment.center,
-//         children: [
-//           Text('Scegli foto profio'),
-//           SizedBox(
-//             height: 20,
-//           ),
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: [
-//               TextButton.icon(
-//                 onPressed: () {
-//                   // pickImage(ImageSource.camera);
-//                 },
-//                 icon: Icon(Icons.camera),
-//                 label: Text('Camera'),
-//               ),
-//               Padding(
-//                 padding: const EdgeInsets.all(8.0),
-//                 child: TextButton.icon(
-//                   onPressed: () {
-//                     // pickImage(ImageSource.gallery);
-//                   },
-//                   icon: Icon(Icons.image),
-//                   label: Text('Galleria'),
-//                 ),
-//               ),
-//             ],
-//           )
-//         ],
-//       ),
-//     );
-//   }
-// }

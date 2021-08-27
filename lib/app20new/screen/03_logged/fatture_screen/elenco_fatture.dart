@@ -16,16 +16,19 @@ class ElencoFatture extends StatelessWidget {
     required this.url,
     required this.title,
     required this.selectYear,
-   
+    required this.cC,
+    required this.isLoading,
   }) : super(key: key);
 
   Widget selectYear;
+  bool isLoading;
 
   final List<Invoice> datiInvoice;
   final DatiUtenza datiUtenza;
   final HttpHelper helper;
   final String url;
   final String title;
+  final String cC;
   final GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
@@ -34,6 +37,7 @@ class ElencoFatture extends StatelessWidget {
     return Scaffold(
       key: _globalKey,
       drawer: ElementiMenu(
+        cC: cC,
         width: width,
         height: height,
         datiUtenza: datiUtenza,
@@ -117,7 +121,7 @@ class ElencoFatture extends StatelessWidget {
                   ),
                 ),
                 FattureNonPagate(
-                
+                  isLoading: isLoading,
                   title: title,
                   datiInvoice: datiInvoice,
                   datiUtenza: datiUtenza,

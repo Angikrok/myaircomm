@@ -1,10 +1,8 @@
-// ignore_for_file: must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_aircomm/app20new/screen/01_loadingscreen/home_screen.dart';
 import 'package:screen_brightness/screen_brightness.dart';
 
-// metodo main
 void main() {
   runApp(MyApp());
 }
@@ -13,7 +11,6 @@ class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    setBrightness(1);
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       systemNavigationBarColor: Colors.black,
       statusBarColor: Colors.transparent, // status bar color

@@ -27,3 +27,6 @@ const Duration kLoginAnimationDuration = Duration(milliseconds: 1500);
 
 // Assets
 
+// Title
+const String titleNotPayed = 'Fatture da pagare';
+const String titlePayed = 'Fatture pagate';

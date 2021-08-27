@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:my_aircomm/app20new/controller/http_helper.dart';
 import 'package:my_aircomm/app20new/data/dati_utenza.dart';
 import 'package:my_aircomm/app20new/data/invoice.dart';
+import 'package:my_aircomm/app20new/model/costanti.dart';
 
 import 'stile_fattura.dart';
 
@@ -13,12 +15,14 @@ class FattureNonPagate extends StatefulWidget {
     required this.helper,
     required this.url,
     required this.title,
+    required this.isLoading,
   }) : super(key: key);
   final DatiUtenza datiUtenza;
   final List<Invoice> datiInvoice;
   final HttpHelper helper;
   final String title;
   final String url;
+  final bool isLoading;
 
   @override
   State<FattureNonPagate> createState() => _FattureNonPagateState();
@@ -75,23 +79,40 @@ class _FattureNonPagateState extends State<FattureNonPagate>
             cerchioGrandeDestra(context),
             cerchioPiccoloDestra(context),
             cerchioSinistra(context),
-            widget.datiInvoice.isEmpty
-                ? nienteDaVederetxt()
-                : Column(
-                    children: [
-                      Expanded(
-                        child: StileFattura(
-                          animation: animation,
-                          animationController: animationController,
-                          title: widget.title,
-                          datiUtenza: widget.datiUtenza,
-                          datiInvoice: widget.datiInvoice,
-                          helper: widget.helper,
-                          url: widget.url,
-                        ),
-                      ),
-                    ],
+            if (widget.datiInvoice.isEmpty)
+              nienteDaVederetxt()
+            else if (widget.isLoading == false)
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                        child: Lottie.network(
+                      'https://assets8.lottiefiles.com/private_files/lf30_63CXnL.json',
+                      height: 195,
+                    )),
                   ),
+                ],
+              )
+            else
+              Column(
+                children: [
+                  Expanded(
+                    child: StileFattura(
+                      isLoading: widget.isLoading,
+                      animation: animation,
+                      animationController: animationController,
+                      title: widget.title,
+                      datiUtenza: widget.datiUtenza,
+                      datiInvoice: widget.datiInvoice,
+                      helper: widget.helper,
+                      url: widget.url,
+                    ),
+                  ),
+                ],
+              ),
           ],
         ),
       ),
@@ -140,18 +161,21 @@ class _FattureNonPagateState extends State<FattureNonPagate>
   nienteDaVederetxt() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Center(
-          child: Icon(
-            Icons.visibility_off_sharp,
-            size: 132,
-            color: Colors.black.withOpacity(.2),
-          ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Center(
+              child: Image.asset(
+            'assets/icon/empty.png',
+            height: 195,
+          )),
         ),
         Center(
           child: Text(
-            'Niente da visualizzare',
+            widget.title == titleNotPayed
+                ? 'Non risultano fatture da pagare'
+                : 'Non risultano fatture pagate',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 17,

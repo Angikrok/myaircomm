@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:my_aircomm/app20new/data/dati_utenza.dart';
 import 'package:my_aircomm/app20new/data/invoice.dart';
 
@@ -73,7 +74,7 @@ class HttpHelper {
           dati.map<DatiUtenza>((e) => DatiUtenza.fromJson(e)).toList().first;
       return datiAziende;
     } else
-       throw Exception('Errore response != 200');
+      throw Exception('Errore response != 200');
   }
 
   Future<List<Invoice>> storicoFatture(String cc, String anno) async {
@@ -83,15 +84,37 @@ class HttpHelper {
       pathFattura,
       parameters,
     );
-    Response response = await get(url);
-    if (response.statusCode == 200) {
-      final jsonResponse = json.decode(response.body);
-      final List dati = jsonResponse['user_invoice_history'];
-      List<Invoice> storicoFatture = dati
-          .map<Invoice>((e) => Invoice.fromJson(e))
-          .toList();
-      return storicoFatture;
-    } else
-      return [];
+    bool internet = true;
+    if (internetChecker(internet) == true) {
+      Response response = await get(url);
+      if (response.statusCode == 200) {
+        final jsonResponse = json.decode(response.body);
+        final List dati = jsonResponse['user_invoice_history'];
+        List<Invoice> storicoFatture =
+            dati.map<Invoice>((e) => Invoice.fromJson(e)).toList();
+        return storicoFatture;
+      } else
+        return [];
+    } else {
+      throw Exception('Nessuna Connessione a internet');
+    }
+  }
+
+  bool internetChecker(bool internet)  {
+    InternetConnectionChecker().onStatusChange.listen((event) {
+      //hasInternet è un bool che serve a capire lo status della connessione. vero connessione ok falso non connesso
+      final hasInternet = event == InternetConnectionStatus.connected;
+
+      internet = true;
+
+      //se è connesso procedi ai test successivi se no torna errore
+      if (hasInternet) {
+        print('cellulare online: passo alla fase successiva');
+        internet = true;
+      } else {
+        internet = false;
+      }
+    });
+    return internet;
   }
 }

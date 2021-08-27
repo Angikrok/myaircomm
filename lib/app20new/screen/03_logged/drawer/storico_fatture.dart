@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:lottie/lottie.dart';
 import 'package:my_aircomm/app20new/data/dati_utenza.dart';
 import 'package:my_aircomm/app20new/model/costanti.dart';
 import 'package:my_aircomm/app20new/screen/03_logged/fatture_screen/elenco_fatture.dart';
@@ -31,9 +32,7 @@ class _StoricoFattureState extends State<StoricoFatture> {
   bool isLoading = false;
   HttpHelper helper = HttpHelper();
   List<Invoice> datiInvoice = [];
-  List<String> list = [
-    'Anno',
-  ];
+  List<String> list = [];
   DateTime? backButtonPressedTime;
   @override
   void initState() {
@@ -64,11 +63,12 @@ class _StoricoFattureState extends State<StoricoFatture> {
               ),
             ),
             child: ElencoFatture(
-              
+              isLoading: isLoading,
+              cC: widget.cC,
               selectYear: selectYear(context),
               datiUtenza: widget.datiUtenza,
               datiInvoice: datiInvoice,
-              title: 'Fatture pagate',
+              title: titlePayed,
               helper: helper,
               url: 'http://core.aircommservizi.it/admin/a/pdf.php?id=',
             ),

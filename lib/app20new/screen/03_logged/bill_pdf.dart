@@ -46,7 +46,6 @@ class _PdfViewState extends State<PdfView> {
                   gradient: LinearGradient(
                       colors: [Color(0xFF00b4d8), Colors.blue[900]!])),
               child: AppBar(
-             
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.vertical(
@@ -65,8 +64,8 @@ class _PdfViewState extends State<PdfView> {
                   progressIndicator: CircularProgressIndicator.adaptive(),
                   indicatorText: Colors.white,
                   showPicker: false,
-                  showNavigation: false,
-                  scrollDirection: Axis.vertical,
+                  showNavigation: true,
+                  scrollDirection: Axis.horizontal,
                   document: document!,
                   zoomSteps: 1,
                 ),
