@@ -30,7 +30,7 @@ class _PrivatoState extends State<Privato> {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-              bluAircomm,
+                bluAircomm,
                 bluAircomm,
               ],
             ),
@@ -196,151 +196,9 @@ class _LoginPrivatoState extends State<LoginPrivato> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(20),
-                        ),
-                        color: Colors.grey[100],
-                      ),
-                      width: MediaQuery.of(context).size.width / 3.5,
-                      child: DropdownButton<String>(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(24),
-                          bottomLeft: Radius.circular(24),
-                        ),
-                        elevation: 0,
-                        dropdownColor: Colors.white.withOpacity(.9),
-                        isExpanded: true,
-                        menuMaxHeight:
-                            MediaQuery.of(context).size.height / 2.05,
-                        underline: Text(
-                          '',
-                        ),
-                        icon: Container(),
-                        value: valueG,
-                        items: listG.map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Center(
-                              child: Text(
-                                value,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (valore) {
-                          listG.indexWhere((element) => listG == valore);
-                          //dbHelper.ricordaDaticlienti(g: valore);
-
-                          valueG = valore!;
-                          setState(() {});
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(20),
-                        ),
-                        color: Colors.grey[100],
-                      ),
-                      width: MediaQuery.of(context).size.width / 3.5,
-                      child: DropdownButton<String>(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(24),
-                          bottomLeft: Radius.circular(24),
-                        ),
-                        elevation: 0,
-                        dropdownColor: Colors.white.withOpacity(.9),
-                        isExpanded: true,
-                        menuMaxHeight:
-                            MediaQuery.of(context).size.height / 2.05,
-                        underline: Text(
-                          '',
-                        ),
-                        icon: Container(),
-                        value: valueM,
-                        items: listM.map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Center(
-                              child: Text(
-                                value,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (valore) {
-                          listM.indexWhere((element) => listM == valore);
-                          //dbHelper.ricordaDaticlienti(m: valore);
-                          valueM = valore!;
-                          setState(() {});
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(20),
-                        ),
-                        color: Colors.grey[100],
-                      ),
-                      width: MediaQuery.of(context).size.width / 3.5,
-                      child: DropdownButton<String>(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(24),
-                          bottomLeft: Radius.circular(24),
-                        ),
-                        elevation: 0,
-                        dropdownColor: Colors.white.withOpacity(.9),
-                        menuMaxHeight:
-                            MediaQuery.of(context).size.height / 2.05,
-                        isExpanded: true,
-                        underline: Text(
-                          '',
-                        ),
-                        icon: Container(),
-                        value: valueA,
-                        items: listA.map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Center(
-                              child: Text(
-                                value,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (valore) {
-                          listA.indexWhere((element) => listA == valore);
-                          //dbHelper.ricordaDaticlienti(a: valore);
-                          valueA = valore!;
-                          setState(() {});
-                        },
-                      ),
-                    ),
-                  ),
-                ),
+                selezionaGiorno(context),
+                selezionaMese(context),
+                selezionaAnno(context),
               ],
             ),
             SizedBox(
@@ -383,9 +241,7 @@ class _LoginPrivatoState extends State<LoginPrivato> {
                           alignment: Alignment.centerRight,
                           child: TextButton(
                               onPressed: () {
-                                showAlertDialog(
-                                  context,
-                                );
+                                showAlertDialog(context);
                               },
                               child: Text(
                                 'Dove trovo il codice cliente?',
@@ -405,7 +261,158 @@ class _LoginPrivatoState extends State<LoginPrivato> {
     );
   }
 
-  Container bottoneAccedi(BuildContext context) {
+  Widget selezionaGiorno(BuildContext context) {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey),
+            borderRadius: BorderRadius.all(
+              Radius.circular(20),
+            ),
+            color: Colors.grey[100],
+          ),
+          width: MediaQuery.of(context).size.width / 3.5,
+          child: DropdownButton<String>(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(24),
+              bottomLeft: Radius.circular(24),
+            ),
+            elevation: 0,
+            dropdownColor: Colors.white.withOpacity(.9),
+            isExpanded: true,
+            menuMaxHeight: MediaQuery.of(context).size.height / 2.05,
+            underline: Text(
+              '',
+            ),
+            icon: Container(),
+            value: valueG,
+            items: listG.map((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Center(
+                  child: Text(
+                    value,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              );
+            }).toList(),
+            onChanged: (valore) {
+              listG.indexWhere((element) => listG == valore);
+              //dbHelper.ricordaDaticlienti(g: valore);
+
+              valueG = valore!;
+              setState(() {});
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget selezionaMese(BuildContext context) {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey),
+            borderRadius: BorderRadius.all(
+              Radius.circular(20),
+            ),
+            color: Colors.grey[100],
+          ),
+          width: MediaQuery.of(context).size.width / 3.5,
+          child: DropdownButton<String>(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(24),
+              bottomLeft: Radius.circular(24),
+            ),
+            elevation: 0,
+            dropdownColor: Colors.white.withOpacity(.9),
+            isExpanded: true,
+            menuMaxHeight: MediaQuery.of(context).size.height / 2.05,
+            underline: Text(
+              '',
+            ),
+            icon: Container(),
+            value: valueM,
+            items: listM.map((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Center(
+                  child: Text(
+                    value,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              );
+            }).toList(),
+            onChanged: (valore) {
+              listM.indexWhere((element) => listM == valore);
+              //dbHelper.ricordaDaticlienti(m: valore);
+              valueM = valore!;
+              setState(() {});
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget selezionaAnno(BuildContext context) {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey),
+            borderRadius: BorderRadius.all(
+              Radius.circular(20),
+            ),
+            color: Colors.grey[100],
+          ),
+          width: MediaQuery.of(context).size.width / 3.5,
+          child: DropdownButton<String>(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(24),
+              bottomLeft: Radius.circular(24),
+            ),
+            elevation: 0,
+            dropdownColor: Colors.white.withOpacity(.9),
+            menuMaxHeight: MediaQuery.of(context).size.height / 2.05,
+            isExpanded: true,
+            underline: Text(
+              '',
+            ),
+            icon: Container(),
+            value: valueA,
+            items: listA.map((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Center(
+                  child: Text(
+                    value,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              );
+            }).toList(),
+            onChanged: (valore) {
+              listA.indexWhere((element) => listA == valore);
+              //dbHelper.ricordaDaticlienti(a: valore);
+              valueA = valore!;
+              setState(() {});
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget bottoneAccedi(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.all(12),

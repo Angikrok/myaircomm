@@ -44,9 +44,7 @@ class ElencoFatture extends StatelessWidget {
         datiUtenza: datiUtenza,
       ),
       body: Container(
-        decoration: BoxDecoration(
-            color:
-                isLoading == false ? Colors.black.withOpacity(.4) : bluAircomm),
+        decoration: BoxDecoration(color: bluAircomm),
         child: Stack(
           children: [
             Positioned(
@@ -54,9 +52,7 @@ class ElencoFatture extends StatelessWidget {
               right: -120,
               child: CircleAvatar(
                 radius: 120,
-                backgroundColor: isLoading == false
-                    ? Color(0xFF023e8a).withOpacity(.4)
-                    : Color(0xFF023e8a),
+                backgroundColor: Color(0xFF023e8a),
               ),
             ),
             Positioned(
@@ -64,9 +60,7 @@ class ElencoFatture extends StatelessWidget {
               left: -150,
               child: CircleAvatar(
                 radius: 135,
-                backgroundColor: isLoading == false
-                    ? Color(0xFF40b6c7).withOpacity(.4)
-                    : Color(0xFF40b6c7),
+                backgroundColor: Color(0xFF40b6c7),
               ),
             ),
             Positioned(
@@ -74,9 +68,7 @@ class ElencoFatture extends StatelessWidget {
               right: -115,
               child: CircleAvatar(
                 radius: 120,
-                backgroundColor: isLoading == false
-                    ? Color(0xFF0096c7).withOpacity(.4)
-                    : Color(0xFF0096c7),
+                backgroundColor: Color(0xFF0096c7),
               ),
             ),
             Positioned(

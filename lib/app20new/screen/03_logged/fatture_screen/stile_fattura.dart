@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:lottie/lottie.dart';
 import 'package:my_aircomm/app20new/controller/http_helper.dart';
 import 'package:my_aircomm/app20new/data/dati_utenza.dart';
 import 'package:my_aircomm/app20new/data/invoice.dart';
@@ -47,86 +46,73 @@ class _StileFatturaState extends State<StileFattura> {
   Widget build(BuildContext context) {
     bool internet = true;
     double width = MediaQuery.of(context).size.width;
-    return widget.isLoading == false
-        ? Container(
-            width: width,
-            height: MediaQuery.of(context).size.height,
-            color: Colors.black.withOpacity(.4),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Lottie.network(
-                    'https://assets8.lottiefiles.com/private_files/lf30_63CXnL.json'),
-              ],
-            ),
-          )
-        : AnimatedBuilder(
-            animation: widget.animationController,
-            builder: (context, _) {
-              return FadeTransition(
-                opacity: widget.animation,
-                child: Transform(
-                  filterQuality: FilterQuality.high,
-                  origin: Offset(-20, 50),
-                  transform: Matrix4.translationValues(
-                      100 * (1.0 - widget.animation.value), 0, 0),
-                  child: ListView.builder(
-                    reverse: false,
-                    shrinkWrap: true,
-                    itemCount: widget.datiInvoice.length,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(32),
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    offset: Offset(-5, 6),
-                                    blurRadius: 5,
-                                    color: Colors.black.withOpacity(.3),
-                                  ),
-                                ],
-                              ),
-                              width: width,
-                              height: 100,
-                              child: ClipRRect(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(38),
-                                ),
-                                child: Container(
-                                  color: Colors.blue[900]!,
-                                  child: Column(
+    return AnimatedBuilder(
+      animation: widget.animationController,
+      builder: (context, _) {
+        return FadeTransition(
+          opacity: widget.animation,
+          child: Transform(
+            filterQuality: FilterQuality.high,
+            origin: Offset(-20, 50),
+            transform: Matrix4.translationValues(
+                100 * (1.0 - widget.animation.value), 0, 0),
+            child: ListView.builder(
+              reverse: false,
+              shrinkWrap: true,
+              itemCount: widget.datiInvoice.length,
+              itemBuilder: (context, index) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(32),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              offset: Offset(-5, 6),
+                              blurRadius: 5,
+                              color: Colors.black.withOpacity(.3),
+                            ),
+                          ],
+                        ),
+                        width: width,
+                        height: 100,
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(38),
+                          ),
+                          child: Container(
+                            color: Colors.blue[900]!,
+                            child: Column(
+                              children: [
+                                Expanded(
+                                  child: Row(
                                     children: [
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            logo_Data(index),
-                                            colonnaInfoFattura(
-                                                context, index, internet),
-                                            arancioniBassi(context, index),
-                                          ],
-                                        ),
-                                      ),
+                                      logo_Data(index),
+                                      colonnaInfoFattura(
+                                          context, index, internet),
+                                      arancioniBassi(context, index),
                                     ],
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
                           ),
-                        ],
-                      );
-                    },
-                  ),
-                ),
-              );
-            },
-          );
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+        );
+      },
+    );
   }
 
   Expanded logo_Data(int index) {

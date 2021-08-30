@@ -56,8 +56,8 @@ class _PdfViewState extends State<PdfView> {
       ),
       body: _isLoading
           ? Center(
-              child: Lottie.network(
-                'https://assets8.lottiefiles.com/private_files/lf30_63CXnL.json',
+              child: Lottie.asset(
+                'assets/icon/loadingList.json',
               ),
             )
           : SafeArea(
@@ -71,8 +71,8 @@ class _PdfViewState extends State<PdfView> {
                   color: bluAircomm,
                 ),
                 child: PDFViewer(
-                  progressIndicator: Lottie.network(
-                    'https://assets8.lottiefiles.com/private_files/lf30_63CXnL.json',
+                  progressIndicator: Lottie.asset(
+                    'assets/icon/loadingList.json',
                   ),
                   indicatorText: Colors.white,
                   showPicker: false,

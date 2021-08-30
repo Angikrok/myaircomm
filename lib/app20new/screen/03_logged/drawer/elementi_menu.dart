@@ -1,5 +1,8 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:my_aircomm/app20new/data/dati_utenza.dart';
 import 'package:my_aircomm/app20new/model/costanti.dart';
 import 'package:my_aircomm/app20new/screen/01_loadingscreen/home_screen.dart';
@@ -27,6 +30,7 @@ class ElementiMenu extends StatefulWidget {
 }
 
 class _ElementiMenuState extends State<ElementiMenu> {
+  ScrollController controller = ScrollController();
   @override
   Widget build(BuildContext context) {
     DatiUtenza dati = widget.datiUtenza;
@@ -106,6 +110,76 @@ class _ElementiMenuState extends State<ElementiMenu> {
               Divider(),
               tastoEsci(context),
               Divider(),
+              Wrap(
+                alignment: WrapAlignment.center,
+                children: [
+                  Text(
+                    'La prossima fattura verrà emessa a: ',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontFamily: 'Coco'),
+                  ),
+                  if (dati.prossimaBolletta == '1')
+                    Text(
+                      'Gennaio',
+                      textAlign: TextAlign.center,
+                    ),
+                  if (dati.prossimaBolletta == '2')
+                    Text(
+                      'Febbraio',
+                      textAlign: TextAlign.center,
+                    ),
+                  if (dati.prossimaBolletta == '3')
+                    Text(
+                      'Marzo',
+                      textAlign: TextAlign.center,
+                    ),
+                  if (dati.prossimaBolletta == '4')
+                    Text(
+                      'Aprile',
+                      textAlign: TextAlign.center,
+                    ),
+                  if (dati.prossimaBolletta == '5')
+                    Text(
+                      'Maggio',
+                      textAlign: TextAlign.center,
+                    ),
+                  if (dati.prossimaBolletta == '6')
+                    Text(
+                      'Giugno',
+                      textAlign: TextAlign.center,
+                    ),
+                  if (dati.prossimaBolletta == '7')
+                    Text(
+                      'Luglio',
+                      textAlign: TextAlign.center,
+                    ),
+                  if (dati.prossimaBolletta == '8')
+                    Text(
+                      'Agosto',
+                      textAlign: TextAlign.center,
+                    ),
+                  if (dati.prossimaBolletta == '9')
+                    Text(
+                      'Settembre',
+                      textAlign: TextAlign.center,
+                    ),
+                  if (dati.prossimaBolletta == '10')
+                    Text(
+                      'Ottobre',
+                      textAlign: TextAlign.center,
+                    ),
+                  if (dati.prossimaBolletta == '11')
+                    Text(
+                      'Novembre',
+                      textAlign: TextAlign.center,
+                    ),
+                  if (dati.prossimaBolletta == '12')
+                    Text(
+                      'Dicembre',
+                      textAlign: TextAlign.center,
+                    ),
+                ],
+              ),
             ],
           )
         ],
@@ -113,7 +187,7 @@ class _ElementiMenuState extends State<ElementiMenu> {
     );
   }
 
-  Container immagine() {
+  Widget immagine() {
     return Container(
       height: 120,
       width: 120,
@@ -135,10 +209,10 @@ class _ElementiMenuState extends State<ElementiMenu> {
     );
   }
 
-  ListTile tastsoFattureNonPagate(BuildContext context, DatiUtenza dati) {
+  Widget tastsoFattureNonPagate(BuildContext context, DatiUtenza dati) {
     return ListTile(
       trailing: Icon(
-        Icons.payment,
+        LineIcons.euroSign,
         color: Color(0xFFfb8500),
       ),
       title: Text(
@@ -171,117 +245,155 @@ class _ElementiMenuState extends State<ElementiMenu> {
     String value = '2021';
     return ListTile(
       trailing: Icon(
-        Icons.payment,
-        color: Color(0xFF2d00f7),
+        Icons.check,
+        color: bluAircomm,
       ),
       title: Text(
         'Fattura pagate',
         style: TextStyle(
-          color: Color(0xFF2d00f7),
+          color: bluAircomm,
         ),
       ),
       onTap: () {
         showDialog(
-          context: context, barrierDismissible: false, // user must tap button!
+          context: context, // user must tap button!
 
           builder: (BuildContext context) {
-            return AlertDialog(
-              backgroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(32))),
-              title: Text(
-                'Seleziona anno',
-                style: TextStyle(fontFamily: 'Coco'),
-              ),
-              content: SingleChildScrollView(
-                child: ListBody(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0, right: 16),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.white),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(20),
-                            ),
-                            color: Color(0xFF0096c7)),
-                        child: DropdownButton<String>(
-                          isExpanded: true,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(24),
-                          ),
-                          underline: Text(
-                            '',
-                          ),
-                          icon: Container(),
-                          value: value,
-                          style: TextStyle(color: Colors.white),
-                          dropdownColor: Color(0xFF0096c7).withOpacity(.92),
-                          elevation: 0,
-                          items: list.map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Center(
-                                child: Text(
-                                  value,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            );
-                          }).toList(),
-                          onChanged: (valore) {
-                            value = valore!;
-                            setState(() {});
-                            Navigator.pushReplacement(
-                                context,
-                                PageTransition(
-                                    child: StoricoFatture(
-                                      cC: widget.cC,
-                                      a: value,
-                                      datiUtenza: widget.datiUtenza,
-                                    ),
-                                    type: PageTransitionType.fade,
-                                    duration: Duration(milliseconds: 1)));
-                          },
-                        ),
-                      ),
-                    ),
-                    Center(
-                        child: Lottie.network(
-                            'https://assets2.lottiefiles.com/packages/lf20_xbf1be8x.json',
-                            height: 200))
-                  ],
-                ),
-              ),
-              actions: [
-                TextButton(
-                  child: Text('Annulla'),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                TextButton(
-                  child: new Text('Seleziona'),
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                        context,
-                        PageTransition(
-                            child: StoricoFatture(
-                              cC: widget.cC,
-                              a: value,
-                              datiUtenza: widget.datiUtenza,
-                            ),
-                            type: PageTransitionType.fade,
-                            duration: Duration(milliseconds: 1)));
-                  },
-                ),
-              ],
-            );
+            return selectYearAlert(value, list, context);
           },
         );
       },
     );
+  }
+
+  Widget selectYearAlert(
+      String value, List<String> list, BuildContext context) {
+    return Platform.isAndroid
+        ? AlertDialog(
+            backgroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(32))),
+            title: Text(
+              'Seleziona anno',
+              style: TextStyle(fontFamily: 'Coco'),
+            ),
+            content: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(24), color: bluAircomm),
+              height: MediaQuery.of(context).size.height / 5,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Center(
+                        child: TextButton(
+                      child: Text(
+                        list[0],
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        navigatoreStorico(list[0]);
+                      },
+                    )),
+                    Center(
+                        child: TextButton(
+                      child: Text(
+                        list[1],
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        navigatoreStorico(list[1]);
+                      },
+                    )),
+                    Center(
+                        child: TextButton(
+                      child: Text(
+                        list[2],
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        navigatoreStorico(list[2]);
+                      },
+                    )),
+                  ],
+                ),
+              ),
+            ),
+            actions: [
+              TextButton(
+                child: Text('Annulla'),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              TextButton(
+                child: new Text('Seleziona'),
+                onPressed: () {
+                  navigatoreStorico(value);
+                },
+              ),
+            ],
+          )
+        : CupertinoAlertDialog(
+            scrollController: controller,
+            insetAnimationCurve: Curves.bounceIn,
+            insetAnimationDuration: Duration(seconds: 10),
+            title: Text(
+              'Seleziona anno',
+              style: TextStyle(fontFamily: 'Coco'),
+            ),
+            content: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CupertinoButton(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(48),
+                        topRight: Radius.circular(48)),
+                    minSize: 5,
+                    child: Text(list[0]),
+                    onPressed: () {
+                      navigatoreStorico(list[0]);
+                    }),
+                CupertinoButton(
+                    borderRadius: BorderRadius.all(Radius.circular(0)),
+                    minSize: 5,
+                    child: Text(list[1]),
+                    onPressed: () {
+                      navigatoreStorico(list[1]);
+                    }),
+                CupertinoButton(
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(48),
+                        bottomRight: Radius.circular(48)),
+                    minSize: 5,
+                    child: Text(list[2]),
+                    onPressed: () {
+                      navigatoreStorico(list[2]);
+                    }),
+              ],
+            ),
+            actions: [
+              CupertinoDialogAction(
+                child: Text('Annulla'),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+  }
+
+  navigatoreStorico(String anno) {
+    return Navigator.pushReplacement(
+        context,
+        PageTransition(
+            child: StoricoFatture(
+              cC: widget.cC,
+              a: anno,
+              datiUtenza: widget.datiUtenza,
+            ),
+            type: PageTransitionType.fade,
+            duration: Duration(milliseconds: 1)));
   }
 
   ListTile tastoEsci(BuildContext context) {

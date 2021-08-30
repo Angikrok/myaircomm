@@ -34,7 +34,6 @@ dependencies:
   page_transition: "^2.0.2"
   flutter_svg: ^0.22.0
   cupertino_icons: ^1.0.2
-  cool_alert: ^1.1.0
   line_icons: ^2.0.1
   internet_connection_checker: ^0.0.1+2
   http: ^0.13.3
@@ -42,13 +41,15 @@ dependencies:
   sqflite: ^2.0.0+3
   fluttertoast: ^8.0.7
   share_plus: "^2.1.4"
-  flutter_launcher_icons: ^0.9.0
   barcode_widget: ^2.0.1
   screen_brightness: ^0.0.4
   qr_flutter: ^4.0.0
   url_launcher: ^6.0.9
   advance_pdf_viewer: "^2.0.0"
   lottie: ^1.1.0
+  connectivity: ^3.0.6
+
+
   
   
    
@@ -62,10 +63,6 @@ dev_dependencies:
     sdk: flutter
   
 
-flutter_icons:
-  image_path: 'assets/icon/logo.png'
-  android: true
-  ios: true
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

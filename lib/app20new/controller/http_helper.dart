@@ -85,6 +85,7 @@ class HttpHelper {
       parameters,
     );
     bool internet = true;
+    internet = internetChecker(internet);
     if (internetChecker(internet) == true) {
       Response response = await get(url);
       if (response.statusCode == 200) {
@@ -100,21 +101,21 @@ class HttpHelper {
     }
   }
 
-  bool internetChecker(bool internet)  {
-    InternetConnectionChecker().onStatusChange.listen((event) {
-      //hasInternet è un bool che serve a capire lo status della connessione. vero connessione ok falso non connesso
-      final hasInternet = event == InternetConnectionStatus.connected;
+  bool internetChecker(bool internet) {
+    //hasInternet è un bool che serve a capire lo status della connessione. vero connessione ok falso non connesso
+    final hasInternet = InternetConnectionStatus.connected;
 
+    internet = true;
+
+    //se è connesso procedi ai test successivi se no torna errore
+    if (hasInternet == InternetConnectionStatus.connected) {
+      print('cellulare online: passo alla fase successiva');
       internet = true;
+    } else {
+      print('Cellulare Offline');
+      internet = false;
+    }
 
-      //se è connesso procedi ai test successivi se no torna errore
-      if (hasInternet) {
-        print('cellulare online: passo alla fase successiva');
-        internet = true;
-      } else {
-        internet = false;
-      }
-    });
     return internet;
   }
 }

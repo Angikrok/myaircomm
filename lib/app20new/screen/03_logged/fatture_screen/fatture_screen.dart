@@ -43,7 +43,6 @@ class _FattureScreenState extends State<FattureScreen> {
       body: WillPopScope(
         onWillPop: onWillPop,
         child: Container(
-          decoration: BoxDecoration(),
           child: ElencoFatture(
             isLoading: widget.isLoading,
             cC: widget.cc,
