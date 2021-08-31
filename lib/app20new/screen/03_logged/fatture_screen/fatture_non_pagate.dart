@@ -66,7 +66,6 @@ class _FattureNonPagateState extends State<FattureNonPagate>
     );
     return Expanded(
       child: FutureBuilder(builder: (BuildContext context, snapshot) {
-        print('Errore $snapshot');
         return Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
@@ -182,44 +181,9 @@ class _FattureNonPagateState extends State<FattureNonPagate>
     );
   }
 
-  Positioned cerchioGrandeDestra(BuildContext context) {
-    return Positioned(
-      top: MediaQuery.of(context).size.height / 3.2,
-      left: MediaQuery.of(context).size.width / 5,
-      child: CircleAvatar(
-        radius: 350,
-        backgroundColor: Color(0xFF023e8a).withOpacity(
-          .4,
-        ),
-      ),
-    );
-  }
 
-  Positioned cerchioPiccoloDestra(BuildContext context) {
-    return Positioned(
-      top: MediaQuery.of(context).size.height / 2.5,
-      left: MediaQuery.of(context).size.width / 4,
-      child: CircleAvatar(
-        radius: 250,
-        backgroundColor: Color(0xFF0096c7).withOpacity(
-          .4,
-        ),
-      ),
-    );
-  }
 
-  Positioned cerchioSinistra(BuildContext context) {
-    return Positioned(
-      top: 35,
-      right: MediaQuery.of(context).size.width / 1.4,
-      child: CircleAvatar(
-        radius: 150,
-        backgroundColor: Colors.grey.withOpacity(
-          .17,
-        ),
-      ),
-    );
-  }
+  
 
   nienteDaVederetxt() {
     return Column(
@@ -279,3 +243,39 @@ class _FattureNonPagateState extends State<FattureNonPagate>
     );
   }
 }
+Positioned cerchioPiccoloDestra(BuildContext context) {
+    return Positioned(
+      top: MediaQuery.of(context).size.height / 2.5,
+      left: MediaQuery.of(context).size.width / 4,
+      child: CircleAvatar(
+        radius: 250,
+        backgroundColor: Color(0xFF0096c7).withOpacity(
+          .4,
+        ),
+      ),
+    );
+  }
+
+  Positioned cerchioSinistra(BuildContext context) {
+    return Positioned(
+      top: 35,
+      right: MediaQuery.of(context).size.width / 1.4,
+      child: CircleAvatar(
+        radius: 150,
+        backgroundColor: Colors.grey.withOpacity(
+          .17,
+        ),
+      ),
+    );
+  }  Positioned cerchioGrandeDestra(BuildContext context) {
+    return Positioned(
+      top: MediaQuery.of(context).size.height / 3.2,
+      left: MediaQuery.of(context).size.width / 5,
+      child: CircleAvatar(
+        radius: 350,
+        backgroundColor: Color(0xFF023e8a).withOpacity(
+          .4,
+        ),
+      ),
+    );
+  }

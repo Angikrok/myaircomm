@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:my_aircomm/app20new/data/dati_utenza.dart';
 import 'package:my_aircomm/app20new/data/invoice.dart';
 
@@ -84,9 +83,9 @@ class HttpHelper {
       pathFattura,
       parameters,
     );
-    bool internet = true;
-    internet = internetChecker(internet);
-    if (internetChecker(internet) == true) {
+  
+ 
+   
       Response response = await get(url);
       if (response.statusCode == 200) {
         final jsonResponse = json.decode(response.body);
@@ -96,26 +95,7 @@ class HttpHelper {
         return storicoFatture;
       } else
         return [];
-    } else {
-      throw Exception('Nessuna Connessione a internet');
-    }
+    } 
   }
 
-  bool internetChecker(bool internet) {
-    //hasInternet è un bool che serve a capire lo status della connessione. vero connessione ok falso non connesso
-    final hasInternet = InternetConnectionStatus.connected;
 
-    internet = true;
-
-    //se è connesso procedi ai test successivi se no torna errore
-    if (hasInternet == InternetConnectionStatus.connected) {
-      print('cellulare online: passo alla fase successiva');
-      internet = true;
-    } else {
-      print('Cellulare Offline');
-      internet = false;
-    }
-
-    return internet;
-  }
-}

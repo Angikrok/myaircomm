@@ -309,7 +309,7 @@ class _StileFatturaState extends State<StileFattura> {
     return internet;
   }
 
-  Expanded arancioniBassi(BuildContext context, int index) {
+  Widget arancioniBassi(BuildContext context, int index) {
     return Expanded(
       flex: 1,
       child: Stack(
@@ -332,29 +332,31 @@ class _StileFatturaState extends State<StileFattura> {
             ),
           ),
           Positioned(
-              right: 2,
-              top: 45,
-              child: widget.title == titleNotPayed
-                  ? IconButton(
-                      icon: SvgPicture.asset(
-                        'assets/icon/barcode.svg',
-                        height: 35,
-                      ),
-                      onPressed: () {
-                        SystemChrome.setPreferredOrientations([
-                          DeviceOrientation.landscapeLeft,
-                          //DeviceOrientation.landscapeRight,
-                        ]);
-                        Navigator.push(
-                          context,
-                          PageTransition(
-                              child: BarCodeFattura(
-                                  data: widget.datiInvoice[index].barCode),
-                              type: PageTransitionType.bottomToTop),
-                        );
-                      },
-                    )
-                  : Container()),
+            right: 2,
+            top: 45,
+            child: widget.title == titleNotPayed
+                ? IconButton(
+                    icon: SvgPicture.asset(
+                      'assets/icon/barcode.svg',
+                      height: 35,
+                    ),
+                    onPressed: () {
+                      SystemChrome.setPreferredOrientations([
+                        DeviceOrientation.landscapeLeft,
+                        //DeviceOrientation.landscapeRight,
+                      ]);
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          child: BarCodeFattura(
+                              data: widget.datiInvoice[index].barCode),
+                          type: PageTransitionType.fade,
+                        ),
+                      );
+                    },
+                  )
+                : Container(),
+          ),
         ],
       ),
     );

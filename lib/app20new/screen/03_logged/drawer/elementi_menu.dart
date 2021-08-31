@@ -6,6 +6,7 @@ import 'package:line_icons/line_icons.dart';
 import 'package:my_aircomm/app20new/data/dati_utenza.dart';
 import 'package:my_aircomm/app20new/model/costanti.dart';
 import 'package:my_aircomm/app20new/screen/01_loadingscreen/home_screen.dart';
+import 'package:my_aircomm/app20new/screen/03_logged/drawer/infoFatturazione.dart';
 import 'package:my_aircomm/app20new/screen/03_logged/fatture_screen/fatture_screen.dart';
 import 'package:page_transition/page_transition.dart';
 import 'storico_fatture.dart';
@@ -108,78 +109,23 @@ class _ElementiMenuState extends State<ElementiMenu> {
               Divider(),
               tastoStorico(context, dati),
               Divider(),
+              ListTile(
+                trailing: Icon(LineIcons.infoCircle, color: Colors.black),
+                title: Text(
+                  'Info Fatturazione',
+                  style: TextStyle(color: Colors.black),
+                ),
+                onTap: () {
+                  Navigator.pushReplacement(
+                      context,
+                      PageTransition(
+                          child: InfoFatturazione(),
+                          type: PageTransitionType.fade));
+                },
+              ),
+              Divider(),
               tastoEsci(context),
               Divider(),
-              Wrap(
-                alignment: WrapAlignment.center,
-                children: [
-                  Text(
-                    'La prossima fattura verrà emessa a: ',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontFamily: 'Coco'),
-                  ),
-                  if (dati.prossimaBolletta == '1')
-                    Text(
-                      'Gennaio',
-                      textAlign: TextAlign.center,
-                    ),
-                  if (dati.prossimaBolletta == '2')
-                    Text(
-                      'Febbraio',
-                      textAlign: TextAlign.center,
-                    ),
-                  if (dati.prossimaBolletta == '3')
-                    Text(
-                      'Marzo',
-                      textAlign: TextAlign.center,
-                    ),
-                  if (dati.prossimaBolletta == '4')
-                    Text(
-                      'Aprile',
-                      textAlign: TextAlign.center,
-                    ),
-                  if (dati.prossimaBolletta == '5')
-                    Text(
-                      'Maggio',
-                      textAlign: TextAlign.center,
-                    ),
-                  if (dati.prossimaBolletta == '6')
-                    Text(
-                      'Giugno',
-                      textAlign: TextAlign.center,
-                    ),
-                  if (dati.prossimaBolletta == '7')
-                    Text(
-                      'Luglio',
-                      textAlign: TextAlign.center,
-                    ),
-                  if (dati.prossimaBolletta == '8')
-                    Text(
-                      'Agosto',
-                      textAlign: TextAlign.center,
-                    ),
-                  if (dati.prossimaBolletta == '9')
-                    Text(
-                      'Settembre',
-                      textAlign: TextAlign.center,
-                    ),
-                  if (dati.prossimaBolletta == '10')
-                    Text(
-                      'Ottobre',
-                      textAlign: TextAlign.center,
-                    ),
-                  if (dati.prossimaBolletta == '11')
-                    Text(
-                      'Novembre',
-                      textAlign: TextAlign.center,
-                    ),
-                  if (dati.prossimaBolletta == '12')
-                    Text(
-                      'Dicembre',
-                      textAlign: TextAlign.center,
-                    ),
-                ],
-              ),
             ],
           )
         ],

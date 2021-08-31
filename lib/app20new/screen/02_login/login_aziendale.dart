@@ -161,7 +161,7 @@ class _LoginAziendaState extends State<LoginAzienda> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                'Partita Iva',
+                'CF intestatario',
                 style: TextStyle(
                     fontSize: 17.0,
                     fontWeight: FontWeight.bold,
@@ -181,8 +181,9 @@ class _LoginAziendaState extends State<LoginAzienda> {
                   child: TextField(
                     keyboardType: TextInputType.number,
                     controller: txtCF,
+                    textCapitalization: TextCapitalization.characters,
                     decoration: InputDecoration(
-                      labelText: 'Partita IVA',
+                      labelText: 'CF Intestatario',
                       errorText: validate_cf ? 'Campo Obbligatorio' : null,
                       suffixIcon: GestureDetector(
                         onTap: () {},
@@ -307,7 +308,6 @@ class _LoginAziendaState extends State<LoginAzienda> {
                         isLoading: isLoading,
                         cc: txtCC.text,
                         datiUtenza: a,
-                       
                       ),
                     ),
                   );
