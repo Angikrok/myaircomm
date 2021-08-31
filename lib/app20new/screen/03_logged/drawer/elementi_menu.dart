@@ -110,7 +110,7 @@ class _ElementiMenuState extends State<ElementiMenu> {
               tastoStorico(context, dati),
               Divider(),
               ListTile(
-                trailing: Icon(LineIcons.infoCircle, color: Colors.black),
+                trailing: Icon(LineIcons.info, color: Colors.black),
                 title: Text(
                   'Info Fatturazione',
                   style: TextStyle(color: Colors.black),
@@ -119,7 +119,10 @@ class _ElementiMenuState extends State<ElementiMenu> {
                   Navigator.pushReplacement(
                       context,
                       PageTransition(
-                          child: InfoFatturazione(),
+                          child: InfoFatturazione(
+                            cC: widget.cC,
+                            datiUtenza: dati,
+                          ),
                           type: PageTransitionType.fade));
                 },
               ),
