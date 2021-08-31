@@ -109,23 +109,7 @@ class _ElementiMenuState extends State<ElementiMenu> {
               Divider(),
               tastoStorico(context, dati),
               Divider(),
-              ListTile(
-                trailing: Icon(LineIcons.info, color: Colors.black),
-                title: Text(
-                  'Info Fatturazione',
-                  style: TextStyle(color: Colors.black),
-                ),
-                onTap: () {
-                  Navigator.pushReplacement(
-                      context,
-                      PageTransition(
-                          child: InfoFatturazione(
-                            cC: widget.cC,
-                            datiUtenza: dati,
-                          ),
-                          type: PageTransitionType.fade));
-                },
-              ),
+              tastoInfo(context, dati),
               Divider(),
               tastoEsci(context),
               Divider(),
@@ -133,6 +117,26 @@ class _ElementiMenuState extends State<ElementiMenu> {
           )
         ],
       ),
+    );
+  }
+
+  ListTile tastoInfo(BuildContext context, DatiUtenza dati) {
+    return ListTile(
+      trailing: Icon(LineIcons.info, color: Colors.black),
+      title: Text(
+        'Info Fatturazione',
+        style: TextStyle(color: Colors.black),
+      ),
+      onTap: () {
+        Navigator.pushReplacement(
+            context,
+            PageTransition(
+                child: InfoFatturazione(
+                  cC: widget.cC,
+                  datiUtenza: dati,
+                ),
+                type: PageTransitionType.fade));
+      },
     );
   }
 
@@ -222,16 +226,19 @@ class _ElementiMenuState extends State<ElementiMenu> {
             backgroundColor: Colors.white,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(32))),
-            title: Text(
-              'Seleziona anno',
-              style: TextStyle(fontFamily: 'Coco'),
+            title: Center(
+              child: Text(
+                'Seleziona anno',
+                style: TextStyle(fontFamily: 'Coco'),
+              ),
             ),
             content: Container(
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(24), color: bluAircomm),
-              height: MediaQuery.of(context).size.height / 5,
+                color: bluAircomm,
+                borderRadius: BorderRadius.circular(24),
+              ),
               child: SingleChildScrollView(
-                child: Column(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Center(
@@ -255,31 +262,33 @@ class _ElementiMenuState extends State<ElementiMenu> {
                       },
                     )),
                     Center(
-                        child: TextButton(
-                      child: Text(
-                        list[2],
-                        style: TextStyle(color: Colors.white),
+                        child: Container(
+                      child: TextButton(
+                        child: Text(
+                          list[2],
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: () {
+                          navigatoreStorico(list[2]);
+                        },
                       ),
-                      onPressed: () {
-                        navigatoreStorico(list[2]);
-                      },
                     )),
                   ],
                 ),
               ),
             ),
             actions: [
-              TextButton(
-                child: Text('Annulla'),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+              Divider(
+                height: 10,
+                thickness: 2,
               ),
-              TextButton(
-                child: new Text('Seleziona'),
-                onPressed: () {
-                  navigatoreStorico(value);
-                },
+              Center(
+                child: TextButton(
+                  child: Text('Annulla'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
               ),
             ],
           )
@@ -287,9 +296,11 @@ class _ElementiMenuState extends State<ElementiMenu> {
             scrollController: controller,
             insetAnimationCurve: Curves.bounceIn,
             insetAnimationDuration: Duration(seconds: 10),
-            title: Text(
-              'Seleziona anno',
-              style: TextStyle(fontFamily: 'Coco'),
+            title: Center(
+              child: Text(
+                'Seleziona anno',
+                style: TextStyle(fontFamily: 'Coco'),
+              ),
             ),
             content: Row(
               mainAxisAlignment: MainAxisAlignment.center,

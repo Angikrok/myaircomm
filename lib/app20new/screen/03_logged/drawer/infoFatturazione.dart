@@ -127,7 +127,7 @@ class _InfoFatturazioneState extends State<InfoFatturazione> {
                                       backgroundColor: Colors.transparent,
                                       child: ClipOval(
                                         child: Image.asset(
-                                            'assets/icon/appLogo.png'),
+                                            'assets/icon/applogo.png'),
                                       ))),
                               Container(
                                 margin: EdgeInsets.all(8),
