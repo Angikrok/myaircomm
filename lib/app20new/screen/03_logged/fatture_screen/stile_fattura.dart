@@ -133,18 +133,22 @@ class _StileFatturaState extends State<StileFattura> {
                   ),
                 ),
                 Positioned(
-                  left: 0,
-                  top: -5,
-                  child: GestureDetector(
-                    onTap: () {
-                      _launchURL(index);
-                    },
-                    child: SvgPicture.asset(
-                      'assets/icon/paypal.svg',
-                      height: 65,
-                    ),
-                  ),
-                ),
+                    left: widget.title == titleNotPayed ? 0 : -2,
+                    top: widget.title == titleNotPayed ? 0 : -5,
+                    child: widget.title == titleNotPayed
+                        ? GestureDetector(
+                            onTap: () {
+                              _launchURL(index);
+                            },
+                            child: SvgPicture.asset(
+                              'assets/icon/paypal.svg',
+                              height: 65,
+                            ),
+                          )
+                        : Image.asset(
+                            'assets/icon/logo.png',
+                            height: 65,
+                          )),
                 Positioned(
                   top: 75,
                   left: 10,
@@ -328,28 +332,29 @@ class _StileFatturaState extends State<StileFattura> {
             ),
           ),
           Positioned(
-            right: 2,
-            top: 45,
-            child: IconButton(
-              icon: SvgPicture.asset(
-                'assets/icon/barcode.svg',
-                height: 35,
-              ),
-              onPressed: () {
-                SystemChrome.setPreferredOrientations([
-                  DeviceOrientation.landscapeLeft,
-                  //DeviceOrientation.landscapeRight,
-                ]);
-                Navigator.push(
-                  context,
-                  PageTransition(
-                      child: BarCodeFattura(
-                          data: widget.datiInvoice[index].barCode),
-                      type: PageTransitionType.bottomToTop),
-                );
-              },
-            ),
-          ),
+              right: 2,
+              top: 45,
+              child: widget.title == titleNotPayed
+                  ? IconButton(
+                      icon: SvgPicture.asset(
+                        'assets/icon/barcode.svg',
+                        height: 35,
+                      ),
+                      onPressed: () {
+                        SystemChrome.setPreferredOrientations([
+                          DeviceOrientation.landscapeLeft,
+                          //DeviceOrientation.landscapeRight,
+                        ]);
+                        Navigator.push(
+                          context,
+                          PageTransition(
+                              child: BarCodeFattura(
+                                  data: widget.datiInvoice[index].barCode),
+                              type: PageTransitionType.bottomToTop),
+                        );
+                      },
+                    )
+                  : Container()),
         ],
       ),
     );
