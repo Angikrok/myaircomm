@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:my_aircomm/app20new/controller/http_helper.dart';
 import 'package:my_aircomm/app20new/data/dati_utenza.dart';
 import 'package:my_aircomm/app20new/data/invoice.dart';
-import 'package:my_aircomm/app20new/model/costanti.dart';
+import 'package:my_aircomm/costanti.dart';
 import 'package:my_aircomm/app20new/screen/03_logged/drawer/elementi_menu.dart';
 import 'fatture_non_pagate.dart';
 
@@ -115,6 +115,7 @@ class ElencoFatture extends StatelessWidget {
                   ),
                 ),
                 FattureNonPagate(
+                  cC: cC,
                   isLoading: isLoading,
                   title: title,
                   datiInvoice: datiInvoice,

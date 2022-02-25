@@ -3,7 +3,7 @@ import 'package:custom_check_box/custom_check_box.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:my_aircomm/app20new/model/alerts.dart';
-import 'package:my_aircomm/app20new/model/costanti.dart';
+import 'package:my_aircomm/costanti.dart';
 import 'package:my_aircomm/app20new/screen/03_logged/fatture_screen/fatture_screen.dart';
 import '/app20new/controller/http_helper.dart';
 import '/app20new/data/dati_login_clienti.dart';
@@ -255,6 +255,11 @@ class _LoginPrivatoState extends State<LoginPrivato> {
               ],
             ),
             bottoneAccedi(context),
+            Row(
+              children: [
+                BackButton(),
+              ],
+            ),
           ],
         ),
       ),
@@ -294,6 +299,7 @@ class _LoginPrivatoState extends State<LoginPrivato> {
                 child: Center(
                   child: Text(
                     value,
+                    style: TextStyle(fontFamily: '', color: Colors.black),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -339,6 +345,7 @@ class _LoginPrivatoState extends State<LoginPrivato> {
             ),
             icon: Container(),
             value: valueM,
+            style: TextStyle(fontFamily: '', color: Colors.black),
             items: listM.map((String value) {
               return DropdownMenuItem<String>(
                 value: value,
@@ -395,6 +402,7 @@ class _LoginPrivatoState extends State<LoginPrivato> {
                 child: Center(
                   child: Text(
                     value,
+                    style: TextStyle(fontFamily: '', color: Colors.black),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -446,7 +454,7 @@ class _LoginPrivatoState extends State<LoginPrivato> {
 
             helper
                 .getDatiCliente(
-              txtCC.text,
+              txtCC.text.substring(7, txtCC.text.length),
               valueG.toString(),
               valueM.toString(),
               valueA.toString(),
@@ -467,7 +475,7 @@ class _LoginPrivatoState extends State<LoginPrivato> {
                   MaterialPageRoute(
                     builder: (context) => FattureScreen(
                       isLoading: true,
-                      cc: txtCC.text,
+                      cc: txtCC.text.substring(7, txtCC.text.length),
                       datiUtenza: datiUtenza,
                     ),
                   ),
@@ -475,7 +483,7 @@ class _LoginPrivatoState extends State<LoginPrivato> {
               });
             });
           });
-          setState(() {});
+          print(txtCC.text.substring(8));
         },
       ),
     );

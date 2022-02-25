@@ -46,13 +46,13 @@ class TextField_Cc extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(right: 16, left: 16, top: 8),
       child: TextFormField(
+        style: TextStyle(fontFamily: '', color: Colors.black),
         validator: (value) {
           if (value!.isEmpty) {
             return 'Questo campo è obbligatorio';
           }
           return null;
         },
-        keyboardType: TextInputType.number,
         controller: txtCC,
         decoration: InputDecoration(
           labelText: txt,

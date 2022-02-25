@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 
 showAlertDialog(BuildContext context) {
   String message =
-      "Il codice cliente lo può trovare nel contratto o nella sua fattura sempre posizionato in alto a sinistra.  Il suo codice coincide con l'anno di installazione seguito dal codice AIR. Ad esempio il signor Mario Rossi installato nel 2018 avrà il codice cliente composto da 2018AIRXXXX dove X sta all'identificatiivo del suo codice cliente";
+      "Il codice cliente lo può trovare nel contratto o nella sua fattura sempre posizionato in alto a sinistra.  Il suo codice coincide con l'anno di installazione seguito dal codice AIR. Ad esempio il signor Mario Rossi installato nel 2018 avrà il codice cliente composto da 2018AIRXXXX.";
   Platform.isIOS
       ? showCupertinoDialog(
           context: context,
@@ -33,7 +33,7 @@ showAlertDialog(BuildContext context) {
                   borderRadius: BorderRadius.all(Radius.circular(32))),
               title: Text(
                 'Codice Cliente',
-                style: TextStyle(fontFamily: 'Coco'),
+                style: TextStyle(),
               ),
               content: Text(message),
               actions: [

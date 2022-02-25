@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:my_aircomm/app20new/data/dati_utenza.dart';
-import 'package:my_aircomm/app20new/model/costanti.dart';
+import 'package:my_aircomm/costanti.dart';
 import 'package:my_aircomm/app20new/screen/01_loadingscreen/home_screen.dart';
 import 'package:my_aircomm/app20new/screen/03_logged/drawer/infoFatturazione.dart';
 import 'package:my_aircomm/app20new/screen/03_logged/fatture_screen/fatture_screen.dart';
@@ -35,87 +35,94 @@ class _ElementiMenuState extends State<ElementiMenu> {
   @override
   Widget build(BuildContext context) {
     DatiUtenza dati = widget.datiUtenza;
-    return Container(
-      width: widget.width / 1.3,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            bottomRight: Radius.circular(32),
-            topLeft: Radius.circular(32),
-            topRight: Radius.circular(32),
-          ),
-          color: Colors.white.withOpacity(1)),
-      child: Stack(
-        children: [
-          Positioned(
-            top: -135,
-            left: -135,
-            child: CircleAvatar(
-              radius: 135,
-              backgroundColor: Color(0xFF40b6c7),
+    return SafeArea(
+      top: false,
+      child: Container(
+        height: widget.height,
+        width: widget.width / 1.3,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(32),
+              topLeft: Radius.circular(32),
+              topRight: Radius.circular(32),
             ),
-          ),
-          Positioned(
-            bottom: -80,
-            right: -50,
-            child: CircleAvatar(
-              radius: 140,
-              backgroundColor: Color(0xFF023e8a),
-            ),
-          ),
-          Positioned(
-            top: 25,
-            child: IconButton(
-              icon: Icon(
-                Icons.clear,
-                color: Colors.white,
-                size: 32,
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ),
-          Positioned(
-            bottom: -135,
-            right: -80,
-            child: Transform.rotate(
-              angle: -20,
+            color: Colors.white.withOpacity(1)),
+        child: Stack(
+          children: [
+            Positioned(
+              top: -135,
+              left: -135,
               child: CircleAvatar(
-                radius: 155,
+                radius: 135,
                 backgroundColor: Color(0xFF40b6c7),
               ),
             ),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Stack(
+            Positioned(
+              bottom: -80,
+              right: -50,
+              child: CircleAvatar(
+                radius: 140,
+                backgroundColor: Color(0xFF023e8a),
+              ),
+            ),
+            Positioned(
+              left: 10,
+              top: 25,
+              child: InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Icon(
+                  Icons.clear,
+                  color: Colors.white,
+                  size: 32,
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: -135,
+              right: -80,
+              child: Transform.rotate(
+                angle: -20,
+                child: CircleAvatar(
+                  radius: 155,
+                  backgroundColor: Color(0xFF40b6c7),
+                ),
+              ),
+            ),
+            SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  immagine(),
+                  Stack(
+                    children: [
+                      immagine(),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  //Nome Cliente
+                  Text(
+                    dati.nome,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.black, fontFamily: 'Coco'),
+                  ),
+                  Divider(),
+                  tastsoFattureNonPagate(context, dati),
+                  Divider(),
+                  tastoStorico(context, dati),
+                  Divider(),
+                  tastoInfo(context, dati),
+                  Divider(),
+                  tastoEsci(context),
+                  Divider(),
                 ],
               ),
-              SizedBox(
-                height: 5,
-              ),
-              //Nome Cliente
-              Text(
-                dati.nome,
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.black, fontFamily: 'Coco'),
-              ),
-              Divider(),
-              tastsoFattureNonPagate(context, dati),
-              Divider(),
-              tastoStorico(context, dati),
-              Divider(),
-              tastoInfo(context, dati),
-              Divider(),
-              tastoEsci(context),
-              Divider(),
-            ],
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

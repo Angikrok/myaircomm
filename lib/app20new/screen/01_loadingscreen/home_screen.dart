@@ -5,7 +5,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:my_aircomm/app20new/screen/02_login/login_aziendale.dart';
 import 'package:my_aircomm/app20new/screen/02_login/login_privato.dart';
 import '/app20new/controller/http_helper.dart';
-import '/app20new/model/costanti.dart';
+import '../../../costanti.dart';
 import '/app20new/model/custom_clippers/header_screen.dart';
 import '/app20new/model/custom_clippers/linea_arancione.dart';
 import '/app20new/model/custom_clippers/linea_blu.dart';
@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen>
   void initState() {
     _animationController = AnimationController(
       vsync: this,
-      duration: kLoginAnimationDuration,
+      duration: Duration(milliseconds: 1500),
     );
 
     final fadeSlideTween = Tween<double>(begin: 0.0, end: 1.0);
@@ -105,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    final space = height > 650 ? kSpaceM : kSpaceS;
+    double space = height > 650 ? 16 : 8;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       //colore sfondo sotto le linee
@@ -117,14 +117,18 @@ class _HomeScreenState extends State<HomeScreen>
           parteSuperioreScreen(),
           SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: kPaddingL),
+              padding: EdgeInsets.symmetric(vertical: 32),
               child: Column(
                 children: <Widget>[
                   Header(animation: _headerTextAnimation),
                   const Spacer(
                     flex: 1,
                   ),
-                  textAnimato(_formElementAnimation),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        top: AppBar().preferredSize.height + 10),
+                    child: textAnimato(_formElementAnimation),
+                  ),
                   const Divider(
                     color: Colors.transparent,
                   ),
@@ -138,7 +142,9 @@ class _HomeScreenState extends State<HomeScreen>
                         ? Container()
                         : privateBusinessSelection(
                             space, context, _formElementAnimation),
-                  Spacer(),
+                  Spacer(
+                    flex: 1,
+                  ),
                 ],
               ),
             ),
@@ -245,7 +251,9 @@ class _HomeScreenState extends State<HomeScreen>
                     ),
                   ),
                   child: ClipRRect(
-                    child: SvgPicture.asset('assets/icon/factory4.svg'),
+                    child: SvgPicture.asset(
+                      'assets/icon/factory4.svg',
+                    ),
                   ),
                 ),
               ),

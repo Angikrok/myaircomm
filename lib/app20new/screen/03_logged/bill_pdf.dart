@@ -2,7 +2,7 @@ import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:my_aircomm/app20new/model/costanti.dart';
+import 'package:my_aircomm/costanti.dart';
 import 'package:share_plus/share_plus.dart';
 
 class PdfView extends StatefulWidget {
@@ -78,7 +78,7 @@ class _PdfViewState extends State<PdfView> {
                   showPicker: false,
                   showNavigation: true,
                   indicatorPosition: IndicatorPosition.topRight,
-                  scrollDirection: Axis.horizontal,
+                  scrollDirection: Axis.vertical,
                   document: document!,
                   zoomSteps: 1,
                 ),
@@ -113,6 +113,7 @@ class _PdfViewState extends State<PdfView> {
         'http://core.aircommservizi.it/admin/a/pdf.php?id=${widget.id}';
     RenderBox? box = context.findRenderObject() as RenderBox;
     Share.share(message,
-        sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+        sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size,
+        );
   }
 }

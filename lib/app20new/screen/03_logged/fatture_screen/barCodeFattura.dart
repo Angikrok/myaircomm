@@ -1,7 +1,7 @@
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:my_aircomm/app20new/model/costanti.dart';
+import 'package:my_aircomm/costanti.dart';
 import 'package:flutter/services.dart';
 import 'package:my_aircomm/main.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -22,7 +22,7 @@ class BarCodeFattura extends StatelessWidget {
           title: Text(
             'Codice a barre per il sistema\n di pagamento digitale',
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 16, fontFamily: 'Coco'),
+            style: TextStyle(fontSize: 16,),
           ),
           centerTitle: true,
           elevation: 0,

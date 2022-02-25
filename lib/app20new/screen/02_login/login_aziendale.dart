@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:my_aircomm/app20new/model/alerts.dart';
-import 'package:my_aircomm/app20new/model/costanti.dart';
+import 'package:my_aircomm/costanti.dart';
 import 'package:my_aircomm/app20new/screen/03_logged/fatture_screen/fatture_screen.dart';
 import '/app20new/controller/http_helper.dart';
 import '/app20new/data/dati_login_aziende.dart';
@@ -36,6 +36,7 @@ class _AziendaleState extends State<Aziendale> {
             ),
           ),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(11.0),
@@ -124,132 +125,137 @@ class _LoginAziendaState extends State<LoginAzienda> {
   bool validate_cf = false;
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Login(context),
-    );
+    return Login(context);
   }
 
-  Column Login(BuildContext context) {
-    return Column(
-      children: [
-        Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                padding: const EdgeInsets.only(right: 16, left: 16),
-                width: MediaQuery.of(context).size.width,
-                child: TextField(
-                  keyboardType: TextInputType.number,
-                  controller: txtCC,
-                  decoration: InputDecoration(
-                    labelText: 'Codice Cliente',
-                    errorText: validate_cc ? 'Campo Obbligatorio' : null,
-                    suffixIcon: Icon(Icons.accessibility_sharp),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(14.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                'CF intestatario',
-                style: TextStyle(
-                    fontSize: 17.0,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Italico'),
-              ),
-            ],
-          ),
-        ),
-        Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Container(
+  Widget Login(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
                   padding: const EdgeInsets.only(right: 16, left: 16),
                   width: MediaQuery.of(context).size.width,
                   child: TextField(
-                    keyboardType: TextInputType.number,
-                    controller: txtCF,
-                    textCapitalization: TextCapitalization.characters,
+                    style: TextStyle(color: Colors.black, fontFamily: ''),
+                    controller: txtCC,
                     decoration: InputDecoration(
-                      labelText: 'CF Intestatario',
-                      errorText: validate_cf ? 'Campo Obbligatorio' : null,
-                      suffixIcon: GestureDetector(
-                        onTap: () {},
-                        child: Icon(
-                          LineIcons.openSourceInitiative,
-                        ),
-                      ),
+                      labelText: 'Codice Cliente',
+                      errorText: validate_cc ? 'Campo Obbligatorio' : null,
+                      suffixIcon: Icon(Icons.accessibility_sharp),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20.0),
                       ),
                     ),
                   ),
                 ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(14.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  'CF intestatario',
+                  style: TextStyle(
+                      fontSize: 17.0,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Italico'),
+                ),
+              ],
+            ),
+          ),
+          Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.only(right: 16, left: 16),
+                    width: MediaQuery.of(context).size.width,
+                    child: TextField(
+                      style: TextStyle(color: Colors.black, fontFamily: ''),
+                      controller: txtCF,
+                      textCapitalization: TextCapitalization.characters,
+                      decoration: InputDecoration(
+                        labelText: 'CF Intestatario',
+                        errorText: validate_cf ? 'Campo Obbligatorio' : null,
+                        suffixIcon: GestureDetector(
+                          onTap: () {},
+                          child: Icon(
+                            LineIcons.openSourceInitiative,
+                          ),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 30.0,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    CustomCheckBox(
+                      checkedFillColor: Colors.green,
+                      uncheckedFillColor: Colors.white,
+                      uncheckedIconColor: Colors.white,
+                      shouldShowBorder: false,
+                      value: ricordami,
+                      onChanged: (value) {
+                        ricordami = value;
+                        setState(() {});
+                      },
+                    ),
+                    Text(
+                      'Ricordami',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: .5),
+                    ),
+                  ],
+                ),
               ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 5,
+              ),
+              Expanded(
+                child: TextButton(
+                    onPressed: () {
+                      showAlertDialog(
+                        context,
+                      );
+                    },
+                    child: Text(
+                      'Dove trovo il codice cliente?',
+                      textAlign: TextAlign.center,
+                    )),
+              )
             ],
           ),
-        ),
-        SizedBox(
-          height: 30.0,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  CustomCheckBox(
-                    checkedFillColor: Colors.green,
-                    uncheckedFillColor: Colors.white,
-                    uncheckedIconColor: Colors.white,
-                    shouldShowBorder: false,
-                    value: ricordami,
-                    onChanged: (value) {
-                      ricordami = value;
-                      setState(() {});
-                    },
-                  ),
-                  Text(
-                    'Ricordami',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                        letterSpacing: .5),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width / 5,
-            ),
-            Expanded(
-              child: TextButton(
-                  onPressed: () {
-                    showAlertDialog(
-                      context,
-                    );
-                  },
-                  child: Text(
-                    'Dove trovo il codice cliente?',
-                    textAlign: TextAlign.center,
-                  )),
-            )
-          ],
-        ),
-        bottoneAccedi(context),
-      ],
+          bottoneAccedi(context),
+          Row(
+            children: [
+              BackButton(),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -288,16 +294,15 @@ class _LoginAziendaState extends State<LoginAzienda> {
               txtCF.text.isEmpty ? validate_cf = true : validate_cf = false;
 
               helper
-                  .getDatiAzienda(txtCC.text, txtCF.text)
+                  .getDatiAzienda(
+                      txtCC.text.substring(7, txtCC.text.length), txtCF.text)
                   .catchError((error, stackTrace) {
                 Fluttertoast.showToast(
                     msg: "Errore nell'inserimento dei dati",
-                    toastLength: Toast.LENGTH_SHORT,
                     gravity: ToastGravity.SNACKBAR,
-                    timeInSecForIosWeb: 22,
                     backgroundColor: Colors.red,
                     textColor: Colors.white,
-                    fontSize: 13.0);
+                    fontSize: 13.5);
               }).then((a) {
                 setState(() {
                   isLoading = true;
@@ -306,7 +311,7 @@ class _LoginAziendaState extends State<LoginAzienda> {
                     MaterialPageRoute(
                       builder: (context) => FattureScreen(
                         isLoading: isLoading,
-                        cc: txtCC.text,
+                        cc: txtCC.text.substring(7, txtCC.text.length),
                         datiUtenza: a,
                       ),
                     ),
