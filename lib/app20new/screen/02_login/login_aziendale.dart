@@ -292,32 +292,41 @@ class _LoginAziendaState extends State<LoginAzienda> {
             () {
               txtCC.text.isEmpty ? validate_cc = true : validate_cf = false;
               txtCF.text.isEmpty ? validate_cf = true : validate_cf = false;
-
-              helper
-                  .getDatiAzienda(
-                      txtCC.text.substring(7, txtCC.text.length), txtCF.text)
-                  .catchError((error, stackTrace) {
+              if (txtCC.text.length < 7) {
                 Fluttertoast.showToast(
                     msg: "Errore nell'inserimento dei dati",
+                    toastLength: Toast.LENGTH_SHORT,
                     gravity: ToastGravity.SNACKBAR,
+                    timeInSecForIosWeb: 22,
                     backgroundColor: Colors.red,
                     textColor: Colors.white,
-                    fontSize: 13.5);
-              }).then((a) {
-                setState(() {
-                  isLoading = true;
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FattureScreen(
-                        isLoading: isLoading,
-                        cc: txtCC.text.substring(7, txtCC.text.length),
-                        datiUtenza: a,
+                    fontSize: 13.0);
+              } else {
+                helper
+                    .getDatiAzienda(txtCC.text.substring(7), txtCF.text)
+                    .catchError((error, stackTrace) {
+                  Fluttertoast.showToast(
+                      msg: "Errore nell'inserimento dei dati",
+                      gravity: ToastGravity.SNACKBAR,
+                      backgroundColor: Colors.red,
+                      textColor: Colors.white,
+                      fontSize: 13.5);
+                }).then((a) {
+                  setState(() {
+                    isLoading = true;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FattureScreen(
+                          isLoading: isLoading,
+                          cc: txtCC.text.substring(7, txtCC.text.length),
+                          datiUtenza: a,
+                        ),
                       ),
-                    ),
-                  );
+                    );
+                  });
                 });
-              });
+              }
             },
           );
         },

@@ -451,15 +451,7 @@ class _LoginPrivatoState extends State<LoginPrivato> {
 
           setState(() {
             if (!(formKeyCc.currentState!.validate())) {}
-
-            helper
-                .getDatiCliente(
-              txtCC.text.substring(7, txtCC.text.length),
-              valueG.toString(),
-              valueM.toString(),
-              valueA.toString(),
-            )
-                .catchError((error, stackTrace) {
+            if (txtCC.text.length < 7) {
               Fluttertoast.showToast(
                   msg: "Errore nell'inserimento dei dati",
                   toastLength: Toast.LENGTH_SHORT,
@@ -468,20 +460,38 @@ class _LoginPrivatoState extends State<LoginPrivato> {
                   backgroundColor: Colors.red,
                   textColor: Colors.white,
                   fontSize: 13.0);
-            }).then((DatiUtenza datiUtenza) {
-              setState(() {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => FattureScreen(
-                      isLoading: true,
-                      cc: txtCC.text.substring(7, txtCC.text.length),
-                      datiUtenza: datiUtenza,
+            } else {
+              helper
+                  .getDatiCliente(
+                txtCC.text.substring(7),
+                valueG.toString(),
+                valueM.toString(),
+                valueA.toString(),
+              )
+                  .catchError((error, stackTrace) {
+                Fluttertoast.showToast(
+                    msg: "Errore nell'inserimento dei dati",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.SNACKBAR,
+                    timeInSecForIosWeb: 22,
+                    backgroundColor: Colors.red,
+                    textColor: Colors.white,
+                    fontSize: 13.0);
+              }).then((DatiUtenza datiUtenza) {
+                setState(() {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => FattureScreen(
+                        isLoading: true,
+                        cc: txtCC.text.substring(7, txtCC.text.length),
+                        datiUtenza: datiUtenza,
+                      ),
                     ),
-                  ),
-                );
+                  );
+                });
               });
-            });
+            }
           });
           print(txtCC.text.substring(8));
         },

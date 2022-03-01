@@ -132,8 +132,8 @@ class _StileFatturaState extends State<StileFattura> {
                   ),
                 ),
                 Positioned(
-                    left: widget.title == titleNotPayed ? 0 : -2,
-                    top: widget.title == titleNotPayed ? 0 : -5,
+                    left: -2,
+                    top: -5,
                     child: Image.asset(
                       'assets/icon/logo.png',
                       height: 65,
@@ -190,7 +190,7 @@ class _StileFatturaState extends State<StileFattura> {
             Text(
               'Totale Fattura: ',
               style: TextStyle(
-                fontSize: 1,
+                fontSize: 12,
                 fontWeight: FontWeight.w500,
                 color: Colors.white,
               ),
@@ -213,7 +213,7 @@ class _StileFatturaState extends State<StileFattura> {
 
   Widget bottoneVediFattura(BuildContext context, int index, bool internet) {
     return Padding(
-      padding: const EdgeInsets.only(top: 8),
+      padding: const EdgeInsets.only(top: 5),
       child: downloadButton(
           context, widget.datiInvoice[index].id_fattura, internet, index),
     );
