@@ -1,9 +1,9 @@
-import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:my_aircomm/costanti.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class PdfView extends StatefulWidget {
   const PdfView({Key? key, required this.id}) : super(key: key);
@@ -13,20 +13,11 @@ class PdfView extends StatefulWidget {
 }
 
 class _PdfViewState extends State<PdfView> {
-  bool _isLoading = true;
-  PDFDocument? document;
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    loadDocument();
-  }
-
-  loadDocument() async {
-    document = await PDFDocument.fromURL(
-        'http://core.aircommservizi.it/admin/a/pdf.php?id=${widget.id}');
-
-    setState(() => _isLoading = false);
   }
 
   @override
@@ -62,32 +53,23 @@ class _PdfViewState extends State<PdfView> {
             )
           : SafeArea(
               child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(
-                      24,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(
+                        24,
+                      ),
                     ),
+                    color: bluAircomm,
                   ),
-                  color: bluAircomm,
-                ),
-                child: PDFViewer(
-                  progressIndicator: Lottie.asset(
-                    'assets/icon/loadingList.json',
-                  ),
-                  indicatorText: Colors.white,
-                  showPicker: false,
-                  showNavigation: true,
-                  indicatorPosition: IndicatorPosition.topRight,
-                  scrollDirection: Axis.vertical,
-                  document: document!,
-                  zoomSteps: 1,
-                ),
-              ),
+                  child: SfPdfViewer.network(
+                    "http://core.aircommservizi.it/admin/a/pdf.php?id=${widget.id}",
+                  )),
             ),
       floatingActionButton: FloatingActionButton(
         elevation: 0,
         onPressed: () {
-          share(context, document.toString());
+          share(context,
+              "http://core.aircommservizi.it/admin/a/pdf.php?id=${widget.id}");
 
           setState(() {});
         },
@@ -112,8 +94,9 @@ class _PdfViewState extends State<PdfView> {
     String message =
         'http://core.aircommservizi.it/admin/a/pdf.php?id=${widget.id}';
     RenderBox? box = context.findRenderObject() as RenderBox;
-    Share.share(message,
-        sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size,
-        );
+    Share.share(
+      message,
+      sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size,
+    );
   }
 }

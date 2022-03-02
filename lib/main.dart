@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
 //     print('$e');
 //   }
 
-//StreamBuilder
+
 Future<void> setBrightness(double brightness) async {
   try {
     await ScreenBrightness.setScreenBrightness(brightness);
